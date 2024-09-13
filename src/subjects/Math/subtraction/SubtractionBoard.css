@@ -1,4 +1,18 @@
 /* Contenedor principal ajustable */
+html, body {
+  overflow: hidden; /* Evita que la página se desplace */
+}
+
+* {
+  touch-action: manipulation; /* Evita comportamientos extraños con el scroll en dispositivos táctiles */
+}
+* {
+  user-select: none; /* Desactiva la selección de texto en toda la página */
+  -webkit-user-select: none; /* Para navegadores basados en Webkit */
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
 .main-container {
   display: flex;
   flex-direction: column;
