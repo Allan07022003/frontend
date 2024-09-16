@@ -1,25 +1,31 @@
 import React from 'react';
-import './SubtractionBoard.css';
+import { useDrop } from 'react-dnd';
 
 const SubtractionBoard = ({ handleDrop, coveredCells, minuendo }) => {
+    const [{ isOver }, drop] = useDrop({
+        accept: 'TIRA',
+        drop: (item) => {
+            handleDrop(item.number, item.length);
+        },
+        collect: (monitor) => ({
+            isOver: !!monitor.isOver(),
+        }),
+    });
+
     return (
-        <div className="board-container" style={{ gridTemplateColumns: `repeat(auto-fit, minmax(40px, 1fr))` }}> {/* Ajuste dinámico de columnas */}
+        <div
+            ref={drop}
+            className="board-container"
+            style={{ gridTemplateColumns: `repeat(${minuendo}, 1fr)` }}
+        >
             {[...Array(minuendo)].map((_, index) => {
                 const number = index + 1;
                 const isCovered = coveredCells.includes(number);
 
-                let backgroundColor = isCovered ? 'bg-blue-500' : ''; // Ajustar color según estado
-
                 return (
                     <div
                         key={index}
-                        className={`board-cell ${backgroundColor}`}
-                        onDrop={(e) => {
-                            e.preventDefault();
-                            const tiraLength = e.dataTransfer.getData('tiraLength');
-                            handleDrop(number, parseInt(tiraLength));
-                        }}
-                        onDragOver={(e) => e.preventDefault()} // Evitar comportamiento predeterminado
+                        className={`board-cell ${isCovered ? 'bg-blue-500' : ''}`}
                     >
                         <span className={isCovered ? 'text-white' : ''}>{number}</span>
                     </div>

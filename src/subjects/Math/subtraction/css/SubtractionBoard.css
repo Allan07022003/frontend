@@ -54,22 +54,20 @@ header {
 /* Ajustes para el contenedor del tablero */
 .board-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); /* Tamaño dinámico de las celdas */
   gap: 5px;
   justify-items: center;
-  padding: 5px; /* Reducir el padding general del tablero */
+  padding: 10px;
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-bottom: 15px; /* Reducir espacio debajo del tablero */
+  margin-bottom: 15px;
+  overflow-x: auto; /* Permitir que el contenido se ajuste horizontalmente si es necesario */
 }
 
-/* Estilos para las celdas del tablero */
 .board-cell {
-  width: 6vw; /* Reducir el tamaño de las celdas */
-  height: 6vw;
-  max-width: 50px; /* Reducir tamaño máximo */
-  max-height: 50px;
+  width: 40px;
+  height: 40px;
   border: 1px solid #ccc;
   display: flex;
   justify-content: center;
