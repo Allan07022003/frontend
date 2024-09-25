@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDrag, useDragLayer } from 'react-dnd';
-import { speak } from '../../../utils/voiceService'; 
+import { speak } from '../../../utils/voiceService'; // Asegúrate de que la función speak esté bien importada
+import { isMobile } from 'react-device-detect'; // Detectar si es un dispositivo móvil
 
 const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 const vowels = ['A', 'E', 'I', 'O', 'U', 'Ñ'];
@@ -13,8 +14,8 @@ const LetterBox = () => {
           <Letter key={index} letter={letter} />
         ))}
       </div>
-      {/* Renderizar el layer personalizado para móviles */}
-      <CustomDragLayer />
+      {/* Renderizar el layer personalizado solo si es móvil */}
+      {isMobile && <CustomDragLayer />}
     </div>
   );
 };
