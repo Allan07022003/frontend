@@ -1,63 +1,97 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Heading, Text, Button, Table, Thead, Tbody, Tr, Th, Td, Input, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useDisclosure, Select } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { toast } from 'react-hot-toast';
-import Header from '../components/Header';
+import React, { useState, useEffect } from "react";
+import {
+  Box,
+  Heading,
+  Text,
+  Button,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  Input,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+  Select,
+} from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import Header from "../components/Header";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const [students, setStudents] = useState([]);
-  const [newStudent, setNewStudent] = useState({ firstName: '', lastName: '', email: '', password: '', age: '', grade: '' });
+  const [newStudent, setNewStudent] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    age: "",
+    grade: "",
+  });
   const [isEditing, setIsEditing] = useState(false);
   const [currentStudentId, setCurrentStudentId] = useState(null);
-  const [teacherGrade, setTeacherGrade] = useState('');
+  const [teacherGrade, setTeacherGrade] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   // Obtener estudiantes asignados al maestro autenticado y el grado del maestro
   useEffect(() => {
     const fetchStudentsAndTeacherInfo = async () => {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       if (!token) {
-        toast.error('No se encontró el token de autenticación');
+        toast.error("No se encontró el token de autenticación");
         return;
       }
 
       try {
-        const studentResponse = await axios.get('https://backend-montessori-c4e81f9ce871.herokuapp.com/api/teachers/students', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const studentResponse = await axios.get(
+          "https://backend-montessori-c4e81f9ce871.herokuapp.com/api/teachers/students",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         if (!studentResponse.data || studentResponse.data.length === 0) {
-          toast.error('No se encontraron estudiantes asignados');
+          toast.error("No se encontraron estudiantes asignados");
           return;
         }
 
         setStudents(studentResponse.data);
       } catch (error) {
-        console.error('Error al obtener los estudiantes:', error);
-        toast.error('Error al obtener los estudiantes');
+        console.error("Error al obtener los estudiantes:", error);
+        toast.error("Error al obtener los estudiantes");
         return;
       }
 
       try {
-        const teacherResponse = await axios.get('https://backend-montessori-c4e81f9ce871.herokuapp.com/api/teachers/profile', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const teacherResponse = await axios.get(
+          "https://backend-montessori-c4e81f9ce871.herokuapp.com/api/teachers/profile",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         if (!teacherResponse.data || !teacherResponse.data.grade) {
-          toast.error('No se pudo obtener el grado del maestro');
+          toast.error("No se pudo obtener el grado del maestro");
           return;
         }
 
         setTeacherGrade(teacherResponse.data.grade);
       } catch (error) {
-        console.error('Error al obtener la información del maestro:', error);
-        toast.error('Error al obtener la información del maestro');
+        console.error("Error al obtener la información del maestro:", error);
+        toast.error("Error al obtener la información del maestro");
       }
     };
 
@@ -75,20 +109,20 @@ const AdminDashboard = () => {
     const { firstName, lastName, email, password, age, grade } = newStudent;
 
     if (!firstName || !lastName || !email || !password || !age || !grade) {
-      toast.error('Por favor completa todos los campos');
+      toast.error("Por favor completa todos los campos");
       return false;
     }
 
     // Validación de email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      toast.error('Correo electrónico no válido');
+      toast.error("Correo electrónico no válido");
       return false;
     }
 
     // Validación de la edad (que sea un número mayor a 4)
     if (age <= 4) {
-      toast.error('La edad debe ser mayor a 4');
+      toast.error("La edad debe ser mayor a 4");
       return false;
     }
 
@@ -100,33 +134,49 @@ const AdminDashboard = () => {
     if (!validateForm()) return; // Validar antes de crear
 
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.post('https://backend-montessori-c4e81f9ce871.herokuapp.com/api/teachers/students/create', 
-        { 
-          ...newStudent, 
-          grade: teacherGrade, 
-          registeredBy: 'teacher_id' 
+      const token = localStorage.getItem("token");
+      const response = await axios.post(
+        "https://backend-montessori-c4e81f9ce871.herokuapp.com/api/teachers/students/create",
+        {
+          ...newStudent,
+          grade: teacherGrade,
+          registeredBy: "teacher_id",
         },
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        });
+        }
+      );
       setStudents([...students, response.data]); // Añadir el nuevo estudiante al estado
-      toast.success('Estudiante creado exitosamente');
-      setNewStudent({ firstName: '', lastName: '', email: '', password: '', age: '', grade: '' });
+      toast.success("Estudiante creado exitosamente");
+      setNewStudent({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        age: "",
+        grade: "",
+      });
       setIsEditing(false); // Resetear el estado de edición
       onClose();
     } catch (error) {
-      console.error('Error creando estudiante:', error);
-      toast.error('Error al crear el estudiante');
+      console.error("Error creando estudiante:", error);
+      toast.error("Error al crear el estudiante");
     }
   };
 
   // Abrir el modal de crear estudiante
   const handleOpenCreateStudent = () => {
     setIsEditing(false); // Cambiar a modo de creación
-    setNewStudent({ firstName: '', lastName: '', email: '', password: '', age: '', grade: '' });
+    setNewStudent({
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      age: "",
+      grade: "",
+    });
     onOpen();
   };
 
@@ -134,7 +184,14 @@ const AdminDashboard = () => {
   const handleEditStudent = (student) => {
     setIsEditing(true); // Cambiar a modo de edición
     setCurrentStudentId(student._id);
-    setNewStudent({ firstName: student.firstName, lastName: student.lastName, email: student.email, password: '', age: student.age, grade: student.grade });
+    setNewStudent({
+      firstName: student.firstName,
+      lastName: student.lastName,
+      email: student.email,
+      password: "",
+      age: student.age,
+      grade: student.grade,
+    });
     onOpen();
   };
 
@@ -143,39 +200,55 @@ const AdminDashboard = () => {
     if (!validateForm()) return; // Validar antes de actualizar
 
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.put(`https://backend-montessori-c4e81f9ce871.herokuapp.com/api/teachers/students/${currentStudentId}`, 
+      const token = localStorage.getItem("token");
+      const response = await axios.put(
+        `https://backend-montessori-c4e81f9ce871.herokuapp.com/api/teachers/students/${currentStudentId}`,
         { ...newStudent, grade: teacherGrade },
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        });
-      setStudents(students.map((student) => (student._id === currentStudentId ? response.data : student)));
-      toast.success('Estudiante actualizado exitosamente');
+        }
+      );
+      setStudents(
+        students.map((student) =>
+          student._id === currentStudentId ? response.data : student
+        )
+      );
+      toast.success("Estudiante actualizado exitosamente");
       setIsEditing(false); // Resetear el estado de edición
-      setNewStudent({ firstName: '', lastName: '', email: '', password: '', age: '', grade: '' });
+      setNewStudent({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        age: "",
+        grade: "",
+      });
       onClose();
     } catch (error) {
-      console.error('Error actualizando estudiante:', error);
-      toast.error('Error al actualizar el estudiante');
+      console.error("Error actualizando estudiante:", error);
+      toast.error("Error al actualizar el estudiante");
     }
   };
 
   // Eliminar un estudiante
   const handleDeleteStudent = async (id) => {
     try {
-      const token = localStorage.getItem('token');
-      await axios.delete(`https://backend-montessori-c4e81f9ce871.herokuapp.com/api/teachers/students/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setStudents(students.filter(student => student._id !== id));
-      toast.success('Estudiante eliminado exitosamente');
+      const token = localStorage.getItem("token");
+      await axios.delete(
+        `https://backend-montessori-c4e81f9ce871.herokuapp.com/api/teachers/students/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setStudents(students.filter((student) => student._id !== id));
+      toast.success("Estudiante eliminado exitosamente");
     } catch (error) {
-      console.error('Error eliminando estudiante:', error);
-      toast.error('Error al eliminar el estudiante');
+      console.error("Error eliminando estudiante:", error);
+      toast.error("Error al eliminar el estudiante");
     }
   };
 
@@ -186,19 +259,31 @@ const AdminDashboard = () => {
         leftButtonText="Inicio"
         leftButtonHref="/dashboard"
         onLogout={() => {
-          const confirmLogout = window.confirm('¿Estás seguro de que quieres cerrar sesión?');
+          const confirmLogout = window.confirm(
+            "¿Estás seguro de que quieres cerrar sesión?"
+          );
           if (confirmLogout) {
-            localStorage.removeItem('token');
-            localStorage.removeItem('profileComplete');
-            localStorage.removeItem('childName');
-            navigate('/login');
+            localStorage.removeItem("token");
+            localStorage.removeItem("profileComplete");
+            localStorage.removeItem("childName");
+            navigate("/login");
           }
         }}
         rightButtonText="Crear Estudiante"
         onCompleteProfileClick={handleOpenCreateStudent}
       />
 
-      <Box maxW="4xl" mx="auto" mt="24" p="6" borderRadius="lg" boxShadow="xl" bg="white" textAlign="center" fontFamily="'Comic Sans MS', cursive, sans-serif">
+      <Box
+        maxW="4xl"
+        mx="auto"
+        mt="24"
+        p="6"
+        borderRadius="lg"
+        boxShadow="xl"
+        bg="white"
+        textAlign="center"
+        fontFamily="'Comic Sans MS', cursive, sans-serif"
+      >
         <Heading mb="4" fontSize="2xl" color="#5A67D8">
           Estudiantes Asignados
         </Heading>
@@ -219,15 +304,26 @@ const AdminDashboard = () => {
           <Tbody>
             {students.map((student) => (
               <Tr key={student._id}>
-                <Td>{student.firstName} {student.lastName}</Td>
-                <Td>{student.grade || 'No asignado'}</Td>
-                <Td>{student.age || 'Sin edad registrada'}</Td>
+                <Td>
+                  {student.firstName} {student.lastName}
+                </Td>
+                <Td>{student.grade || "No asignado"}</Td>
+                <Td>{student.age || "Sin edad registrada"}</Td>
                 <Td>{student.email}</Td>
                 <Td>
-                  <Button colorScheme="teal" size="sm" mr="2" onClick={() => handleEditStudent(student)}>
+                  <Button
+                    colorScheme="teal"
+                    size="sm"
+                    mr="2"
+                    onClick={() => handleEditStudent(student)}
+                  >
                     Editar
                   </Button>
-                  <Button colorScheme="red" size="sm" onClick={() => handleDeleteStudent(student._id)}>
+                  <Button
+                    colorScheme="red"
+                    size="sm"
+                    onClick={() => handleDeleteStudent(student._id)}
+                  >
                     Eliminar
                   </Button>
                 </Td>
@@ -239,7 +335,9 @@ const AdminDashboard = () => {
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>{isEditing ? 'Editar Estudiante' : 'Crear Nuevo Estudiante'}</ModalHeader>
+            <ModalHeader>
+              {isEditing ? "Editar Estudiante" : "Crear Nuevo Estudiante"}
+            </ModalHeader>
             <ModalCloseButton />
             <ModalBody>
               <Input
@@ -292,10 +390,15 @@ const AdminDashboard = () => {
               </Select>
             </ModalBody>
             <ModalFooter>
-              <Button colorScheme="blue" onClick={isEditing ? handleUpdateStudent : handleCreateStudent}>
-                {isEditing ? 'Actualizar Estudiante' : 'Crear Estudiante'}
+              <Button
+                colorScheme="blue"
+                onClick={isEditing ? handleUpdateStudent : handleCreateStudent}
+              >
+                {isEditing ? "Actualizar Estudiante" : "Crear Estudiante"}
               </Button>
-              <Button onClick={onClose} ml="2">Cancelar</Button>
+              <Button onClick={onClose} ml="2">
+                Cancelar
+              </Button>
             </ModalFooter>
           </ModalContent>
         </Modal>

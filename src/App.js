@@ -1,25 +1,33 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import MathDashboard from './subjects/Math/MathDashboard'; // Dashboard de matemáticas
-import FractionBoard from './subjects/Math/Fractions/FractionBoard'; // Tablero de fracciones
-import SubtractionActivity from './subjects/Math/subtraction/SubtractionActivity'; // Actividad de restas con tiras
-import { AssistantProvider } from './context/AssistantContext'; // Proveedor del contexto del asistente
-import { Toaster } from 'react-hot-toast'; // Notificaciones
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+// rutas de materias
+import MathDashboard from "./subjects/Math/MathDashboard"; // Dashboard de matemáticas
+import FractionBoard from "./subjects/Math/Fractions/FractionBoard"; // Tablero de fracciones
+import SubtractionActivity from "./subjects/Math/subtraction/SubtractionActivity"; // Actividad de restas con tiras
+import Activity from "./subjects/Lenguaje/Activity";
+
+import { AssistantProvider } from "./context/AssistantContext"; // Proveedor del contexto del asistente
+import { Toaster } from "react-hot-toast"; // Notificaciones
 
 // Importaciones necesarias para React DnD
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { TouchBackend } from 'react-dnd-touch-backend';
-import { isMobile } from 'react-device-detect'; // Detectar si es un dispositivo móvil
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { TouchBackend } from "react-dnd-touch-backend";
+import { isMobile } from "react-device-detect"; // Detectar si es un dispositivo móvil
 
 // Importaciones para el sistema de autenticación
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Dashboard from './pages/Dashboard';
-import ProtectedRoute from './utils/ProtectedRoute'; // Rutas protegidas
-import AdminDashboard from './pages/adminDashboard'; // Importar la página de admin
-import ResetPassword from './pages/ResetPassword'; // Importar la página de solicitud de restablecimiento de contraseña
-import ResetPasswordForm from './pages/NewPassword'; // Importar la página de restablecimiento de contraseña con token
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
+import ProtectedRoute from "./utils/ProtectedRoute"; // Rutas protegidas
+import AdminDashboard from "./pages/adminDashboard"; // Importar la página de admin
+import ResetPassword from "./pages/ResetPassword"; // Importar la página de solicitud de restablecimiento de contraseña
+import ResetPasswordForm from "./pages/NewPassword"; // Importar la página de restablecimiento de contraseña con token
 
 function App() {
   return (
@@ -41,56 +49,69 @@ function App() {
               <Route path="/reset-password" element={<ResetPassword />} />
 
               {/* Nueva ruta para restablecer la contraseña utilizando el token */}
-              <Route path="/reset-password/:token" element={<ResetPasswordForm />} />
+              <Route
+                path="/reset-password/:token"
+                element={<ResetPasswordForm />}
+              />
 
               {/* Ruta protegida del dashboard */}
-              <Route 
-                path="/dashboard" 
+              <Route
+                path="/dashboard"
                 element={
                   <ProtectedRoute>
                     <Dashboard />
                   </ProtectedRoute>
-                } 
+                }
               />
 
               {/* Ruta del dashboard de matemáticas */}
-              <Route 
-                path="/math" 
+              <Route
+                path="/math"
                 element={
                   <ProtectedRoute>
                     <MathDashboard />
                   </ProtectedRoute>
-                } 
+                }
               />
 
               {/* Ruta para fracciones */}
-              <Route 
-                path="/math/fractions" 
+              <Route
+                path="/math/fractions"
                 element={
                   <ProtectedRoute>
                     <FractionBoard />
                   </ProtectedRoute>
-                } 
+                }
               />
 
               {/* Ruta para la actividad de restas con tiras */}
-              <Route 
-                path="/math/subtraction" 
+              <Route
+                path="/math/subtraction"
                 element={
                   <ProtectedRoute>
                     <SubtractionActivity />
                   </ProtectedRoute>
-                } 
+                }
+              />
+              {/* ruta para modulo de lenguaje */}
+
+              <Route
+                path="/language"
+                element={
+                  <ProtectedRoute>
+                    <Activity />
+                  </ProtectedRoute>
+                }
               />
 
               {/* Ruta para el panel de administración */}
-              <Route 
-                path="/adminDashboard" 
+              <Route
+                path="/adminDashboard"
                 element={
                   <ProtectedRoute>
                     <AdminDashboard />
                   </ProtectedRoute>
-                } 
+                }
               />
             </Routes>
           </div>

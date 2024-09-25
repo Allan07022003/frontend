@@ -10,13 +10,9 @@ const MathDashboard = () => {
         <Link to="/math/fractions" className="bg-blue-500 text-white py-4 px-6 rounded-lg text-2xl hover:bg-blue-600">
           Fracciones
         </Link>
-        <Link to="/math/addition" className="bg-green-500 text-white py-4 px-6 rounded-lg text-2xl hover:bg-green-600">
-          Sumas
-        </Link>
         <Link to="/math/subtraction" className="bg-red-500 text-white py-4 px-6 rounded-lg text-2xl hover:bg-red-600">
           Restas
         </Link>
-        {/* Agrega más enlaces aquí para otras actividades como multiplicación, división, etc. */}
       </div>
     </div>
   );
