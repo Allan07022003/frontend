@@ -41,13 +41,10 @@ const Letter = ({ letter }) => {
     <div
       ref={drag}
       onClick={handleClick}
-      className={`flex items-center justify-center font-bold 
-                  ${isMobile ? 'text-2xl h-10 w-10' : 'text-3xl h-14 w-14 sm:text-4xl sm:h-16 sm:w-16 lg:text-5xl lg:h-20 lg:w-20'} 
-                  border-2 border-gray-300 rounded-md shadow-md cursor-pointer notranslate ${color} 
-                  transition-transform transform hover:scale-105`}
+      className={`flex items-center justify-center font-bold text-4xl h-16 w-16 border-2 border-gray-300 rounded-md shadow-md cursor-pointer ${color} transition-transform transform hover:scale-105`}
       style={{
-        cursor: 'grab',
-        opacity: isDragging ? 0.5 : 1, // Ajuste para que se vea más claro que se está arrastrando
+        cursor: isDragging ? 'grabbing' : 'grab',
+        opacity: isDragging ? 1 : 1,
       }}
     >
       {letter}

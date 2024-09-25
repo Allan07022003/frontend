@@ -1,24 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { fetchImageFromPixabay } from '../../../utils/pixabayService'; // Traer imagen desde Pixabay
+import { fetchRandomImageFromPixabay } from '../../../utils/pixabayService'; // Traer imagen desde Pixabay
 
-const ImageDisplay = ({ word }) => {
+const ImageDisplay = ({ difficulty, onWordGenerated }) => {
   const [imageUrl, setImageUrl] = useState('');
+  const [generatedWord, setGeneratedWord] = useState('');
 
   useEffect(() => {
     const fetchImage = async () => {
-      const url = await fetchImageFromPixabay(word);
-      setImageUrl(url);
+      const result = await fetchRandomImageFromPixabay(difficulty);
+      if (result) {
+        setImageUrl(result.imageUrl);
+        setGeneratedWord(result.word); // Aquí pasamos la palabra al padre o componente que la necesita
+        onWordGenerated(result.word); // Notificar al padre que se generó una nueva palabra
+      }
     };
 
     fetchImage();
-  }, [word]);
+  }, [difficulty, onWordGenerated]);
 
   return (
     <div className="mt-4">
       {imageUrl ? (
-        <img src={imageUrl} alt={word} className="w-48 h-48 object-cover" />
+        <img src={imageUrl} alt={generatedWord} className="w-48 h-48 object-cover" />
       ) : (
-        <p>No se encontró una imagen para "{word}"</p>
+        <p>Cargando imagen...</p>
       )}
     </div>
   );
