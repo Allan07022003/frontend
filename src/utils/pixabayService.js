@@ -1,5 +1,5 @@
 export const fetchRandomImageFromPixabay = async (difficulty) => {
-    const API_KEY = process.env.REACT_APP_PIXABAY_API_KEY;
+    const API_KEY = process.env.NEXT_PUBLIC_PIXABAY_API_KEY;
     
     let query;
     if (difficulty === 'easy') {
