@@ -1,38 +1,43 @@
 export const fetchRandomImageFromPixabay = async (difficulty) => {
-    const API_KEY = process.env.NEXT_PUBLIC_PIXABAY_API_KEY;
+    const API_KEY = process.env.REACT_APP_PIXABAY_API_KEY;
     
+    console.log('API KEY utilizada:', API_KEY); // Verifica que la clave API está cargada
+  
     let query;
     if (difficulty === 'easy') {
-      query = 'animal'; // Consulta amplia para imágenes fáciles
+      query = 'cat, dog, bird'; // Consulta para imágenes fáciles
     } else if (difficulty === 'medium') {
-      query = 'object'; // Consulta para imágenes de dificultad media
+      query = 'elephant, horse, tree'; // Consulta para imágenes de dificultad media
     } else if (difficulty === 'hard') {
-      query = 'transport, technology'; // Consulta más avanzada para dificultad alta
+      query = 'crocodile, airplane, building'; // Consulta avanzada para dificultad alta
     }
   
     const url = `https://pixabay.com/api/?key=${API_KEY}&q=${encodeURIComponent(query)}&image_type=photo&per_page=3`;
+    
+    console.log('URL de la API de Pixabay:', url);  // Verifica la URL completa
   
     try {
       const response = await fetch(url);
       const data = await response.json();
+      
+      console.log('Respuesta de la API:', data);
   
       if (data.hits && data.hits.length > 0) {
-        // Seleccionar una imagen aleatoria de los resultados
         const randomIndex = Math.floor(Math.random() * data.hits.length);
         const selectedImage = data.hits[randomIndex];
-        
-        // Obtener la primera etiqueta (tag) que representa la palabra asociada a la imagen
+  
         const word = selectedImage.tags.split(',')[0].trim();
   
         return {
           imageUrl: selectedImage.webformatURL,
-          word: word // Devolver la palabra asociada a la imagen para que el niño la forme
+          word: word
         };
       } else {
+        console.error('No se encontraron imágenes');
         return null;
       }
     } catch (error) {
-      console.error('Error fetching image from Pixabay:', error);
+      console.error('Error al obtener imagen de Pixabay:', error);
       return null;
     }
   };
