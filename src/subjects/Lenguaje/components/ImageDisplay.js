@@ -1,34 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { fetchRandomImageFromPixabay } from '../../../utils/pixabayService'; // Importar la función que trae la imagen desde Pixabay
+import React from 'react';
 
-const ImageDisplay = ({ difficulty }) => {
-    const [imageUrl, setImageUrl] = useState('');
-    const [word, setWord] = useState('');
-
-    useEffect(() => {
-        const fetchImage = async () => {
-            const result = await fetchRandomImageFromPixabay(difficulty);
-            if (result) {
-                setImageUrl(result.imageUrl);
-                setWord(result.word);
-            }
-        };
-
-        fetchImage();
-    }, [difficulty]);
-
-    return (
-        <div className="mt-4">
-            {imageUrl ? (
-                <div>
-                    <img src={imageUrl} alt={word} className="w-48 h-48 object-cover" />
-                    <p>Palabra a formar: {word}</p>
-                </div>
-            ) : (
-                <p>Cargando imagen...</p>
-            )}
-        </div>
-    );
+const ImageDisplay = ({ imageUrl }) => {
+  return (
+    <div className="my-4 flex justify-center items-center w-full">
+      {imageUrl ? (
+        <img
+          src={imageUrl}
+          alt="Imagen generada"
+          className="w-full max-w-xs sm:max-w-sm lg:max-w-md xl:max-w-lg h-auto object-contain"
+          style={{ maxHeight: '200px', marginBottom: '0.5rem' }} // Limitar la altura de la imagen
+        />
+      ) : (
+        <p>Cargando imagen...</p>
+      )}
+    </div>
+  );
 };
 
 export default ImageDisplay;
