@@ -11,7 +11,10 @@ import LetterBox from "./components/LetterBox";
 import Header from "../../components/Header";
 
 const Activity = () => {
-  const [difficulty, setDifficulty] = useState("easy");
+  // Guardar la dificultad en localStorage y obtenerla si existe
+  const [difficulty, setDifficulty] = useState(
+    () => localStorage.getItem("difficulty") || "easy"
+  );
   const [currentIndex, setCurrentIndex] = useState(
     () => JSON.parse(localStorage.getItem("currentIndex")) || 0
   );
@@ -36,8 +39,9 @@ const Activity = () => {
   const { showAssistantMessage } = useAssistant();
   const currentAnimation = animationsData[difficulty][currentIndex];
 
-  // Guardar en localStorage el estado de las letras y la animación
+  // Guardar en localStorage el estado de la dificultad, letras y animación
   useEffect(() => {
+    localStorage.setItem("difficulty", difficulty); // Guardar la dificultad seleccionada
     localStorage.setItem("currentIndex", JSON.stringify(currentIndex));
 
     const storedLetters =
@@ -53,12 +57,20 @@ const Activity = () => {
 
     // Actualizar la URL de la animación
     setAnimationUrl(currentAnimation.animationUrl);
-  }, [currentIndex, enteredLetters, currentAnimation.animationUrl]);
+  }, [currentIndex, enteredLetters, currentAnimation.animationUrl, difficulty]);
 
   // Limpiar el estado de intentos cuando se cambie de palabra
   useEffect(() => {
     setAttempts(0);
   }, [currentIndex]);
+
+  // Actualizar los slots de letras al cambiar la dificultad o la palabra actual
+  useEffect(() => {
+    setEnteredLetters(
+      Array(animationsData[difficulty][currentIndex].word.length).fill(null)
+    );
+    setAnimationUrl(animationsData[difficulty][currentIndex].animationUrl);
+  }, [difficulty, currentIndex]);
 
   // Función para manejar cuando el niño complete la palabra
   const handleWordComplete = (isCorrect) => {
@@ -84,7 +96,7 @@ const Activity = () => {
       // Esperar 5 segundos antes de pasar a la siguiente palabra
       setTimeout(() => {
         handleNext(); // Llamar a la función para avanzar a la siguiente palabra
-      }, 5000); // Aquí espera 5 segundos
+      }, 5000);
     } else {
       showAssistantMessage("Palabra incorrecta. Intenta de nuevo.", "error");
     }
@@ -101,16 +113,12 @@ const Activity = () => {
 
       setCurrentIndex(currentIndex + 1);
       setEnteredLetters(
-        JSON.parse(localStorage.getItem("enteredLetters"))?.[
-          currentIndex + 1
-        ] ||
-          Array(animationsData[difficulty][currentIndex + 1].word.length).fill(
-            null
-          )
+        Array(animationsData[difficulty][currentIndex + 1].word.length).fill(
+          null
+        )
       );
       setAnimationUrl(
-        JSON.parse(localStorage.getItem("animationUrls"))?.[currentIndex + 1] ||
-          animationsData[difficulty][currentIndex + 1].animationUrl
+        animationsData[difficulty][currentIndex + 1].animationUrl
       );
     }
   };
@@ -126,16 +134,12 @@ const Activity = () => {
 
       setCurrentIndex(currentIndex - 1);
       setEnteredLetters(
-        JSON.parse(localStorage.getItem("enteredLetters"))?.[
-          currentIndex - 1
-        ] ||
-          Array(animationsData[difficulty][currentIndex - 1].word.length).fill(
-            null
-          )
+        Array(animationsData[difficulty][currentIndex - 1].word.length).fill(
+          null
+        )
       );
       setAnimationUrl(
-        JSON.parse(localStorage.getItem("animationUrls"))?.[currentIndex - 1] ||
-          animationsData[difficulty][currentIndex - 1].animationUrl
+        animationsData[difficulty][currentIndex - 1].animationUrl
       );
     }
   };
@@ -144,6 +148,7 @@ const Activity = () => {
   const handleClearLetters = () => {
     setEnteredLetters(Array(currentAnimation.word.length).fill(null));
   };
+
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="min-h-screen bg-gradient-to-r from-pink-200 via-purple-200 to-blue-200 flex flex-col items-center justify-start py-4 relative">
@@ -237,4 +242,5 @@ const Activity = () => {
     </DndProvider>
   );
 };
+
 export default Activity;
