@@ -38,7 +38,7 @@ import RecursosNaturales from "./subjects/Sciences/Pages/RecursosNaturales";
 function App() {
   return (
     <AssistantProvider>
-      <DndProvider backend={isMobile ? TouchBackend : HTML5Backend}>
+<DndProvider backend={isMobile ? TouchBackend({ enableMouseEvents: false, delayTouchStart: 300 }) : HTML5Backend}>
         <Router>
           <div className="min-h-screen bg-gray-100 text-gray-900">
             <Toaster position="bottom-left" reverseOrder={false} />
