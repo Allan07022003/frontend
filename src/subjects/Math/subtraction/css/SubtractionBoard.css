@@ -1,6 +1,6 @@
 /* Contenedor principal ajustable */
 html, body {
-  overflow: hidden; /* Evita que la página se desplace */
+  overflow: auto; 
 }
 
 * {

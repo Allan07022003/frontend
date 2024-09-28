@@ -148,7 +148,6 @@ const Activity = () => {
   const handleClearLetters = () => {
     setEnteredLetters(Array(currentAnimation.word.length).fill(null));
   };
-
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="min-h-screen bg-gradient-to-r from-pink-200 via-purple-200 to-blue-200 flex flex-col items-center justify-start py-4 relative">
@@ -162,21 +161,21 @@ const Activity = () => {
             filter: "brightness(1) contrast(1)",
           }}
         ></div>
-
+  
         {/* Header */}
         <Header
           title="Lenguaje"
           leftButtonText="Volver"
           leftButtonHref="../dashboard"
           rightButtonText="Inicio"
-        rightButtonHref="../dashboard"
+          rightButtonHref="../dashboard"
           primaryColor="from-pink-500 to-red-500"
           secondaryColor="bg-yellow-400 hover:bg-yellow-300"
           className="z-10"
         />
-
-        {/* Contenedor principal dinámico */}
-        <div className="flex flex-col items-center justify-start mt-12 sm:mt-16 lg:mt-24 xl:mt-32 relative z-10 bg-white bg-opacity-90 rounded-lg p-2 sm:p-4 shadow-lg w-full max-w-xs sm:max-w-md lg:max-w-2xl xl:max-w-4xl mx-auto min-h-[60vh] space-y-4 sm:space-y-6 transform scale-80 sm:scale-100">
+  
+        {/* Contenedor principal dinámico con media queries personalizadas */}
+        <div className="flex flex-col items-center justify-start mt-16 sm:mt-24 lg:mt-28 xl:mt-32 relative z-10 bg-white bg-opacity-90 rounded-lg p-2 sm:p-4 shadow-lg w-full xs-320:max-w-xs xs-350:max-w-sm xs-390:max-w-md xs-430:max-w-lg lg:max-w-2xl xl:max-w-3xl mx-auto min-h-[60vh] space-y-4 sm:space-y-6">
           {/* Selector de dificultad */}
           <div className="flex flex-col sm:flex-row items-center justify-center space-y-1 sm:space-y-0 w-full text-xs sm:text-lg">
             <label
@@ -199,12 +198,12 @@ const Activity = () => {
               <option value="hard">Difícil</option>
             </select>
           </div>
-
-          {/* Animación compacta */}
-          <div className="flex justify-center items-center w-full max-h-12 sm:max-h-32 lg:max-h-48 mb-3">
-            <AnimatedIcon animationUrl={animationUrl} />
-          </div>
-
+  
+            {/* Animación aumentada en móviles con media queries */}
+            <div className="flex justify-center items-center w-full xs-320:max-h-20 xs-350:max-h-24 xs-390:max-h-32 xs-430:max-h-36 sm:max-h-40 lg:max-h-48 mb-3">
+              <AnimatedIcon animationUrl={animationUrl} className="w-full h-auto" />
+            </div>
+  
           {/* DropZone más compacto */}
           <div className="w-full flex justify-center mt-1 sm:mt-2">
             <DropZone
@@ -216,20 +215,20 @@ const Activity = () => {
               setAttempts={setAttempts}
             />
           </div>
-
+  
           {/* Botón para borrar letras */}
           <button
             onClick={handleClearLetters}
-            className="px-1 py-1 sm:px-4 sm:py-2 bg-red-500 text-white font-bold text-xs sm:text-lg rounded-full shadow-md hover:bg-red-600 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-300"
+            className="px-2 py-1 sm:px-4 sm:py-2 bg-red-500 text-white font-bold text-xs sm:text-lg rounded-full shadow-md hover:bg-red-600 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-300"
           >
             Borrar letras
           </button>
-
+  
           {/* Contenedor de letras (LetterBox) */}
           <div className="w-full max-w-full lg:max-w-4xl">
             <LetterBox />
           </div>
-
+  
           {/* Botones de navegación */}
           <div className="flex space-x-1 sm:space-x-4 text-xs sm:text-lg">
             <Navigation
@@ -243,6 +242,7 @@ const Activity = () => {
       </div>
     </DndProvider>
   );
-};
+  
+};  
 
 export default Activity;

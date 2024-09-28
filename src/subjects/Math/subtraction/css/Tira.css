@@ -52,11 +52,11 @@ html, body {
   align-items: center;
   color: white;
   font-weight: bold;
-  height: 25px; /* Altura ajustada para todas las tiras */
+  height: 25px; 
   font-size: 0.85rem;
   margin-bottom: 4px;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
-  width: calc(20px * var(--length)); /* Ajuste del ancho base */
+  width: calc(30px * var(--length)); 
 }
 
 .tira:hover {
@@ -67,7 +67,7 @@ html, body {
 /* Para pantallas más pequeñas (tablets y móviles) */
 @media (max-width: 768px) {
   .tira {
-    height: 18px; /* Reducimos la altura en pantallas pequeñas */
+    height: 20px; /* Reducimos la altura en pantallas pequeñas */
     width: calc(15px * var(--length)); /* Ancho ajustado para tablets */
   }
 }
@@ -75,7 +75,13 @@ html, body {
 /* Para pantallas muy pequeñas (móviles) */
 @media (max-width: 480px) {
   .tira {
-    height: 16px; /* Reducimos aún más la altura en móviles */
-    width: calc(12px * var(--length)); /* Ancho ajustado para móviles */
+    height: 20px; /* Reducimos aún más la altura en móviles */
+    width: calc(15px * var(--length)); /* Ancho ajustado para móviles */
+  }
+}
+@media (max-width: 390px) {
+  .tira {
+    height: 24px; /* Reducimos aún más la altura en móviles */
+    width: calc(20px * var(--length)); /* Ancho ajustado para móviles */
   }
 }
