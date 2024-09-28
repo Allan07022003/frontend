@@ -55,7 +55,7 @@ const Login = () => {
         boxShadow="xl"
         bg="white"
         border="none"
-        fontFamily="'Comic Sans MS', cursive, sans-serif"
+        fontFamily="'Roboto', 'Arial', sans-serif"  
         textAlign="center"
         position="relative"
         zIndex="1"
@@ -121,15 +121,6 @@ const Login = () => {
           >
             Iniciar Sesión
           </Button>
-
-          {/* Agregar enlace para la recuperación de contraseña */}
-          <Text mt="4">
-            ¿Olvidaste tu contraseña?{' '}
-            <Link to="/reset-password" style={{ color: '#FF0080', fontWeight: 'bold' }}>
-              Recuperar Contraseña
-            </Link>
-          </Text>
-
           <Text mt="4" zIndex="1">
             ¿No tienes una cuenta?{' '}
             <Link to="/register" style={{ color: '#FF0080', fontWeight: 'bold' }}>

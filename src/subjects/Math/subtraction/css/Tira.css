@@ -52,31 +52,30 @@ html, body {
   align-items: center;
   color: white;
   font-weight: bold;
-  height: 25px;
+  height: 25px; /* Altura ajustada para todas las tiras */
   font-size: 0.85rem;
-  margin-bottom: 4px; /* Reducir espacio entre tiras */
-  width: calc(6vw * var(--length));
+  margin-bottom: 4px;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
-}
-.tira:hover {
-  transform: scale(1.05);
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Agregar una sombra al arrastrar */
+  width: calc(20px * var(--length)); /* Ajuste del ancho base */
 }
 
-.tira.is-dragging {
-  opacity: 0.6;
-  transform: scale(1.1); /* Escalar ligeramente para mostrar el arrastre */
+.tira:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
 }
+
+/* Para pantallas más pequeñas (tablets y móviles) */
 @media (max-width: 768px) {
   .tira {
-    height: 20px;
-    width: calc(30px * var(--length));
+    height: 18px; /* Reducimos la altura en pantallas pequeñas */
+    width: calc(15px * var(--length)); /* Ancho ajustado para tablets */
   }
 }
 
+/* Para pantallas muy pequeñas (móviles) */
 @media (max-width: 480px) {
   .tira {
-    height: 18px;
-    width: calc(25px * var(--length));
+    height: 16px; /* Reducimos aún más la altura en móviles */
+    width: calc(12px * var(--length)); /* Ancho ajustado para móviles */
   }
 }

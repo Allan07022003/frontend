@@ -53,7 +53,6 @@ const Register = () => {
     };
 
     return (
-      // Envolver todo el formulario en un componente de motion para animaciones de entrada y salida
       <motion.div
         initial="initial"
         animate="animate"
@@ -69,7 +68,7 @@ const Register = () => {
           boxShadow="xl"
           bg="white"
           border="none"
-          fontFamily="'Comic Sans MS', cursive, sans-serif"
+          fontFamily="'Roboto', 'Arial', sans-serif"  
           textAlign="center"
           position="relative"
           zIndex="1"

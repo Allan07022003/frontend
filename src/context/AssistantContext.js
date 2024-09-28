@@ -73,7 +73,7 @@ export const AssistantProvider = ({ children }) => {
         },
         icon: null,
         position: 'top-center',
-        duration: 4000, // Duración más corta
+        duration: 5000, 
       }
     );
   };

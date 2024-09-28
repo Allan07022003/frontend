@@ -2,6 +2,14 @@ import React, { useState, useCallback, useMemo } from 'react';
 import FractionPiece from './FractionPiece';
 import { useAssistant } from '../../../context/AssistantContext';
 import Header from '../../../components/Header';
+import { DndProvider } from 'react-dnd';
+import { TouchBackend } from 'react-dnd-touch-backend'; // Backend para móviles
+import { HTML5Backend } from 'react-dnd-html5-backend'; // Backend para escritorio
+
+// Función para detectar si es un dispositivo móvil
+const isMobileDevice = () => {
+  return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+};
 
 const FractionBoard = () => {
   const availableFractions = useMemo(() => [1, 1/2, 1/3, 1/4, 1/5, 1/6, 1/7, 1/8, 1/9, 1/10], []);
@@ -69,9 +77,9 @@ const FractionBoard = () => {
 
       const pieceSize = fraction * 360;
       const x1 = 50 + 50 * Math.cos(Math.PI * accumulatedAngle / 180);
-      const y1 = 50 + 50 * Math.sin(Math.PI * accumulatedAngle / 180); 
+      const y1 = 50 + Math.sin(Math.PI * accumulatedAngle / 180) * 50;
       const x2 = 50 + 50 * Math.cos(Math.PI * (accumulatedAngle + pieceSize) / 180);
-      const y2 = 50 + 50 * Math.sin(Math.PI * (accumulatedAngle + pieceSize) / 180); 
+      const y2 = 50 + Math.sin(Math.PI * (accumulatedAngle + pieceSize) / 180) * 50;
       const largeArcFlag = pieceSize > 180 ? 1 : 0;
 
       accumulatedAngle += pieceSize;
@@ -87,74 +95,54 @@ const FractionBoard = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-between bg-gradient-to-b from-blue-200 via-purple-100 to-green-100 relative px-4 sm:px-6 lg:px-8 pt-12 pb-4 sm:pt-16">
-      <Header
-        title="Actividad de Fracciones"
-        leftButtonText="Volver"
-        leftButtonHref="../../../App.js"  
-        rightButtonText="Actividades"
-        rightButtonHref="../Math"
-        primaryColor="from-blue-400 to-purple-500"
-        secondaryColor="bg-yellow-400 hover:bg-yellow-300"
-      />
+    <DndProvider backend={isMobileDevice() ? TouchBackend : HTML5Backend}>
+      <div className="min-h-screen flex flex-col items-center justify-between bg-gradient-to-b from-blue-200 via-purple-100 to-green-100 relative px-4 sm:px-6 lg:px-8 pt-12 pb-4 sm:pt-16">
+        <Header
+          title="Actividad de Fracciones"
+          leftButtonText="Volver"
+          leftButtonHref="../dashboard"
+          rightButtonText="Actividades"
+          rightButtonHref="../Math"
+          primaryColor="from-blue-400 to-purple-500"
+          secondaryColor="bg-yellow-400 hover:bg-yellow-300"
+        />
 
-      {/* Elementos de fondo ligeros */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-10 left-10 w-24 h-24 bg-blue-300 bg-opacity-25 rounded-full"></div>
-        <div className="absolute bottom-10 right-16 w-28 h-28 bg-purple-300 bg-opacity-25 rounded-full"></div>
-        <div className="absolute top-1/3 left-1/4 transform rotate-12 text-blue-300 text-6xl font-bold opacity-20">
-          1/2
-        </div>
-        <div className="absolute bottom-1/4 right-1/3 transform -rotate-6 text-purple-300 text-5xl font-bold opacity-20">
-          1/4
+        <div className="flex flex-col items-center justify-center flex-grow w-full max-w-7xl z-10">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-5 gap-3 md:gap-4 xl:gap-6">
+            {circles.map((pieces, index) => (
+              <div key={index} className="bg-white border border-blue-300 rounded-md flex items-center justify-center p-1 sm:p-2 md:p-3 lg:p-4 xl:p-5">
+                <svg
+                  viewBox="0 0 100 100"
+                  className="w-full h-auto max-w-[60px] max-h-[60px] sm:max-w-[80px] sm:max-h-[80px] md:max-w-[100px] md:max-h-[100px] lg:max-w-[120px] lg:max-h-[120px] xl:max-w-[140px] xl:max-h-[140px] border-4 border-blue-500 rounded-full overflow-hidden shadow-lg"
+                  onDragOver={(e) => e.preventDefault()}
+                  onDrop={(e) => handleDrop(e, index)}
+                >
+                  {renderCircleFill(pieces)}
+                </svg>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 mt-4">
+            {availableFractions.map((fraction, i) => (
+              <FractionPiece
+                key={i}
+                fraction={fraction}
+                color={colors[i]}
+                label={fraction === 1 ? '1/1' : `1/${Math.round(1 / fraction)}`}
+              />
+            ))}
+          </div>
+
+          <button
+            onClick={resetCircles}
+            className="mt-2 sm:mt-4 px-4 py-2 bg-blue-500 text-white text-sm sm:text-base font-semibold rounded-lg shadow hover:bg-blue-600 focus:outline-none transition duration-300 ease-in-out transform hover:scale-105"
+          >
+            Reiniciar Círculos
+          </button>
         </div>
       </div>
-
-      <div className="flex flex-col items-center justify-center flex-grow w-full max-w-7xl z-10">
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-5 gap-3 md:gap-4 xl:gap-6">
-          {circles.map((pieces, index) => (
-            <div key={index} className="bg-white border border-blue-300 rounded-md flex items-center justify-center p-1 sm:p-2 md:p-3 lg:p-4 xl:p-5">
-              <svg
-                viewBox="0 0 100 100"
-                className="w-full h-auto max-w-[60px] max-h-[60px] sm:max-w-[80px] sm:max-h-[80px] md:max-w-[100px] md:max-h-[100px] lg:max-w-[120px] lg:max-h-[120px] xl:max-w-[140px] xl:max-h-[140px] border-4 border-blue-500 rounded-full overflow-hidden shadow-lg"
-                onDragOver={(e) => e.preventDefault()}
-                onDrop={(e) => handleDrop(e, index)}
-              >
-                {renderCircleFill(pieces)}
-              </svg>
-            </div>
-          ))}
-        </div>
-
-        <div className="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 mt-4">
-          {availableFractions.map((fraction, i) => (
-            <FractionPiece
-              key={i}
-              fraction={fraction}
-              color={colors[i]} 
-              label={fraction === 1 ? '1/1' : `1/${Math.round(1/fraction)}`}
-              onDragStart={(e) => {
-                e.dataTransfer.setData(
-                  'piece',
-                  JSON.stringify({ fraction, color: colors[i] })
-                );
-                e.target.style.opacity = "0.5";
-              }}
-              onDragEnd={(e) => {
-                e.target.style.opacity = "1";
-              }}
-            />
-          ))}
-        </div>
-
-        <button 
-          onClick={resetCircles}
-          className="mt-2 sm:mt-4 px-4 py-2 bg-blue-500 text-white text-sm sm:text-base font-semibold rounded-lg shadow hover:bg-blue-600 focus:outline-none transition duration-300 ease-in-out transform hover:scale-105"
-        >
-          Reiniciar Círculos
-        </button>
-      </div>
-    </div>
+    </DndProvider>
   );
 };
 

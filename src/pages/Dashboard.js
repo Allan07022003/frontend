@@ -130,7 +130,7 @@ const Dashboard = () => {
                 <Text textAlign="center" fontSize={{ base: 'sm', sm: 'md' }} className="text-white opacity-80">¡Libera tu creatividad!</Text>
               </Box>
 
-              <Box onClick={() => navigate('/science')} bgGradient="linear(to-r, orange.200, orange.500)" p={6} borderRadius="xl" boxShadow="lg" className="hover:scale-105 transition-transform cursor-pointer">
+              <Box onClick={() => navigate('/sciences')} bgGradient="linear(to-r, orange.200, orange.500)" p={6} borderRadius="xl" boxShadow="lg" className="hover:scale-105 transition-transform cursor-pointer">
                 <Text textAlign="center" fontWeight="bold" fontSize={{ base: 'lg', sm: 'xl' }} className="text-white">Ciencias</Text>
                 <Text textAlign="center" fontSize={{ base: 'sm', sm: 'md' }} className="text-white opacity-80">¡Explora el mundo que te rodea!</Text>
               </Box>

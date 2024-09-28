@@ -168,6 +168,8 @@ const Activity = () => {
           title="Lenguaje"
           leftButtonText="Volver"
           leftButtonHref="../dashboard"
+          rightButtonText="Inicio"
+        rightButtonHref="../dashboard"
           primaryColor="from-pink-500 to-red-500"
           secondaryColor="bg-yellow-400 hover:bg-yellow-300"
           className="z-10"

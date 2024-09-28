@@ -6,33 +6,38 @@ import {
   Navigate,
 } from "react-router-dom";
 // rutas de materias
-import MathDashboard from "./subjects/Math/MathDashboard"; // Dashboard de matemáticas
-import FractionBoard from "./subjects/Math/Fractions/FractionBoard"; // Tablero de fracciones
-import SubtractionActivity from "./subjects/Math/subtraction/SubtractionActivity"; // Actividad de restas con tiras
+import MathDashboard from "./subjects/Math/MathDashboard"; 
+import FractionBoard from "./subjects/Math/Fractions/FractionBoard"; 
+import SubtractionActivity from "./subjects/Math/subtraction/SubtractionActivity"; 
 import Activity from "./subjects/Lenguaje/Activity";
 
-import { AssistantProvider } from "./context/AssistantContext"; // Proveedor del contexto del asistente
-import { Toaster } from "react-hot-toast"; // Notificaciones
+import { AssistantProvider } from "./context/AssistantContext"; 
+import { Toaster } from "react-hot-toast"; 
 
 // Importaciones necesarias para React DnD
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { TouchBackend } from "react-dnd-touch-backend";
-import { isMobile } from "react-device-detect"; // Detectar si es un dispositivo móvil
+import { isMobile } from "react-device-detect"; 
 
 // Importaciones para el sistema de autenticación
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
-import ProtectedRoute from "./utils/ProtectedRoute"; // Rutas protegidas
-import AdminDashboard from "./pages/adminDashboard"; // Importar la página de admin
-import ResetPassword from "./pages/ResetPassword"; // Importar la página de solicitud de restablecimiento de contraseña
-import ResetPasswordForm from "./pages/NewPassword"; // Importar la página de restablecimiento de contraseña con token
+import ProtectedRoute from "./utils/ProtectedRoute"; 
+import AdminDashboard from "./pages/adminDashboard"; 
+import ResetPassword from "./pages/ResetPassword"; 
+import ResetPasswordForm from "./pages/NewPassword"; 
+
+// Nuevas rutas para el módulo de Ciencias
+import CategorySelection from "./subjects/Sciences/CategorySelection"; 
+import BiologiaBasica from "./subjects/Sciences/Pages/BiologiaBasica"; 
+import CicloDeVida from "./subjects/Sciences/Pages/CicloDeVida"; 
+import RecursosNaturales from "./subjects/Sciences/Pages/RecursosNaturales"; 
 
 function App() {
   return (
     <AssistantProvider>
-      {/* Configuración de React DnD con backend móvil o HTML5 dependiendo del dispositivo */}
       <DndProvider backend={isMobile ? TouchBackend : HTML5Backend}>
         <Router>
           <div className="min-h-screen bg-gray-100 text-gray-900">
@@ -47,72 +52,67 @@ function App() {
 
               {/* Ruta para solicitud de restablecimiento de contraseña */}
               <Route path="/reset-password" element={<ResetPassword />} />
-
-              {/* Nueva ruta para restablecer la contraseña utilizando el token */}
-              <Route
-                path="/reset-password/:token"
-                element={<ResetPasswordForm />}
-              />
+              <Route path="/reset-password/:token" element={<ResetPasswordForm />} />
 
               {/* Ruta protegida del dashboard */}
-              <Route
-                path="/dashboard"
-                element={
-                  <ProtectedRoute>
-                    <Dashboard />
-                  </ProtectedRoute>
-                }
-              />
+              <Route path="/dashboard" element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              } />
 
-              {/* Ruta del dashboard de matemáticas */}
-              <Route
-                path="/math"
-                element={
-                  <ProtectedRoute>
-                    <MathDashboard />
-                  </ProtectedRoute>
-                }
-              />
+              {/* Rutas para matemáticas */}
+              <Route path="/math" element={
+                <ProtectedRoute>
+                  <MathDashboard />
+                </ProtectedRoute>
+              } />
+              <Route path="/math/fractions" element={
+                <ProtectedRoute>
+                  <FractionBoard />
+                </ProtectedRoute>
+              } />
+              <Route path="/math/subtraction" element={
+                <ProtectedRoute>
+                  <SubtractionActivity />
+                </ProtectedRoute>
+              } />
 
-              {/* Ruta para fracciones */}
-              <Route
-                path="/math/fractions"
-                element={
-                  <ProtectedRoute>
-                    <FractionBoard />
-                  </ProtectedRoute>
-                }
-              />
-
-              {/* Ruta para la actividad de restas con tiras */}
-              <Route
-                path="/math/subtraction"
-                element={
-                  <ProtectedRoute>
-                    <SubtractionActivity />
-                  </ProtectedRoute>
-                }
-              />
-              {/* ruta para modulo de lenguaje */}
-
-              <Route
-                path="/language"
-                element={
-                  <ProtectedRoute>
-                    <Activity />
-                  </ProtectedRoute>
-                }
-              />
+              {/* Ruta para el módulo de lenguaje */}
+              <Route path="/language" element={
+                <ProtectedRoute>
+                  <Activity />
+                </ProtectedRoute>
+              } />
 
               {/* Ruta para el panel de administración */}
-              <Route
-                path="/adminDashboard"
-                element={
-                  <ProtectedRoute>
-                    <AdminDashboard />
-                  </ProtectedRoute>
-                }
-              />
+              <Route path="/adminDashboard" element={
+                <ProtectedRoute>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              } />
+
+              {/* Rutas para el módulo de Ciencias */}
+              <Route path="/sciences" element={
+                <ProtectedRoute>
+                  <CategorySelection />
+                </ProtectedRoute>
+              } />
+              <Route path="/sciences/biologia-basica" element={
+                <ProtectedRoute>
+                  <BiologiaBasica />
+                </ProtectedRoute>
+              } />
+              <Route path="/sciences/ciclo-de-vida" element={
+                <ProtectedRoute>
+                  <CicloDeVida />
+                </ProtectedRoute>
+              } />
+              <Route path="/sciences/recursos-naturales" element={
+                <ProtectedRoute>
+                  <RecursosNaturales />
+                </ProtectedRoute>
+              } />
             </Routes>
           </div>
         </Router>

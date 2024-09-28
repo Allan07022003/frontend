@@ -110,7 +110,7 @@ const SubtractionActivity = () => {
         <Header
           title="Restas"
           leftButtonText="Inicio"
-          leftButtonHref="../../../App.js"
+          leftButtonHref="/dashboard"
           rightButtonText="Actividades"
           rightButtonHref="../Math"
           primaryColor="from-blue-600 to-blue-900"
