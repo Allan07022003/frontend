@@ -1,7 +1,5 @@
 const animationsData = [
-  { word: 'gato', isVivo: true, animationUrl: 'https://lottie.host/fd59edeb-3aa7-4884-95e6-a78c6fc9a1b3/RXkFA3TPYQ.json' },
   { word: 'perro', isVivo: true, animationUrl: 'https://lottie.host/66407738-73ab-42c6-b520-10d5a6d6f275/U8xKlED2K3.json' },
-  { word: 'pato', isVivo: true, animationUrl: 'https://lottie.host/9b27cc4f-2966-42c1-a330-4e9a4a561ca6/W8UARXprA4.json' },
   { word: 'mono', isVivo: true, animationUrl: 'https://lottie.host/96449f31-59b2-46a0-b1ca-1ba6d5c304fc/iXCdTZWCF6.json' },
   { word: 'carro', isVivo: false, animationUrl: 'https://lottie.host/be981326-ccb6-4ec6-81a2-79924fadc698/oFOv7NZxbK.json' },
   { word: 'niño', isVivo: true, animationUrl: 'https://lottie.host/cb9a7c59-aaad-4b05-874c-6f9ea30fd151/36x3f3MfPB.json' },

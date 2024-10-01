@@ -14,7 +14,7 @@ module.exports = {
           '50%': { transform: 'translateY(-10px)' },
         },
       },
-      screens: { // Agregar estos breakpoints personalizados
+      screens: { 
         'xs-320': '320px',
         'xs-350': '350px',
         'xs-390': '390px',

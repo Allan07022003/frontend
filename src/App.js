@@ -32,8 +32,7 @@ import ResetPasswordForm from "./pages/NewPassword";
 // Nuevas rutas para el módulo de Ciencias
 import CategorySelection from "./subjects/Sciences/CategorySelection"; 
 import BiologiaBasica from "./subjects/Sciences/Pages/BiologiaBasica"; 
-import CicloDeVida from "./subjects/Sciences/Pages/CicloDeVida"; 
-import RecursosNaturales from "./subjects/Sciences/Pages/RecursosNaturales"; 
+import CicloDeVida from "./subjects/Sciences/Pages/BodyWithOrgans"; 
 
 function App() {
   return (
@@ -103,14 +102,9 @@ function App() {
                   <BiologiaBasica />
                 </ProtectedRoute>
               } />
-              <Route path="/sciences/ciclo-de-vida" element={
+              <Route path="/sciences/cuerpo-humano" element={
                 <ProtectedRoute>
                   <CicloDeVida />
-                </ProtectedRoute>
-              } />
-              <Route path="/sciences/recursos-naturales" element={
-                <ProtectedRoute>
-                  <RecursosNaturales />
                 </ProtectedRoute>
               } />
             </Routes>

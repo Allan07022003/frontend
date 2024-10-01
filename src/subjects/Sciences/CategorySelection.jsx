@@ -11,16 +11,15 @@ const CategorySelection = () => {
       path: '/sciences/biologia-basica',
     },
     {
-      title: 'Recursos Naturales',
+      title: 'Cuerpo Humano',
       description: 'Clasificación de recursos naturales y objetos artificiales.',
       imgSrc: 'https://res.cloudinary.com/drl8mphdx/image/upload/v1727501542/v18lracae6fj5ozpm26p.png',
-      path: '/sciences/recursos-naturales',
+      path: '/sciences/cuerpo-humano',
     },
   ];
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center py-10 bg-gradient-to-r from-blue-100 via-purple-200 to-pink-100">
-      {/* Header con solo el botón de inicio */}
       <CustomHeader 
         title="Ciencias Montessori"
         leftButtonText="Inicio"
@@ -30,12 +29,9 @@ const CategorySelection = () => {
         showLeftButton={true}
         showRightButton={false}
       />
-
       <h1 className="text-4xl font-bold text-purple-800 mb-10 text-center">
         Elige una categoría para practicar
       </h1>
-
-      {/* Contenedor centrado y responsive de las cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 justify-center items-center w-full max-w-4xl px-4">
         {categories.map((category) => (
           <Link

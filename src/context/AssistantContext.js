@@ -53,7 +53,7 @@ export const AssistantProvider = ({ children }) => {
   const showAssistantMessage = (message, type) => {
     const animation = animations[type] || infoAnimation;
 
-    toast.dismiss(); // Descartar cualquier toast anterior antes de mostrar uno nuevo
+    toast.dismiss(); 
 
     toast(
       <div className="flex items-center space-x-2 sm:space-x-4">
@@ -73,7 +73,7 @@ export const AssistantProvider = ({ children }) => {
         },
         icon: null,
         position: 'top-center',
-        duration: 4000, 
+        duration: 6000, 
       }
     );
   };
