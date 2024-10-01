@@ -6,8 +6,8 @@ const organTranslations = {
   corazon: "corazón",
   pulmones: "pulmones",
   estomago: "estómago",
-  higado: "hígado", 
-  rinones: "riñones", 
+  higado: "hígado",
+  rinones: "riñones",
   intestinos: "intestinos",
   cerebro: "cerebro",
 };
@@ -37,16 +37,15 @@ const Organ = ({ name, imageUrl }) => {
     >
       <img
         src={imageUrl}
-        alt={organTranslations[name]} 
+        alt={organTranslations[name]}
         className="organ-img"
         style={{
-          width: "8vw", 
-          maxWidth: "100px", 
-          height: "auto", 
-          objectFit: "contain", 
+          width: "8vw",
+          maxWidth: "100px",
+          height: "auto",
+          objectFit: "contain",
         }}
       />
-      <p>{organTranslations[name]}</p>
     </div>
   );
 };

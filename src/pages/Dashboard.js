@@ -119,7 +119,7 @@ const Dashboard = () => {
 
             <Grid 
   templateColumns={{ base: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' }} 
-  gap={6} 
+  gap={4}  // Reduje el gap para dar más espacio entre las cards
   className="w-full max-w-6xl px-4"
   justifyContent="center"
   alignItems="center"
@@ -127,13 +127,13 @@ const Dashboard = () => {
   <Box 
     onClick={() => navigate('/math')} 
     bgGradient="linear(to-r, blue.200, blue.500)" 
-    p={6}  // Aumentando padding para más espacio
-    borderRadius="2xl"
-    height={{ base: "180px", sm: "200px" }}  // Aumentando el tamaño de las cards
-    boxShadow="lg"
-    className="hover:scale-110 hover:shadow-2xl transition-all duration-500 cursor-pointer transform"
+    p={4}  // Reduje el padding
+    borderRadius="xl"  // Reduje el radio de los bordes
+    height={{ base: "140px", sm: "160px", lg: "180px" }}  // Reduje la altura
+    boxShadow="md"
+    className="hover:scale-105 hover:shadow-xl transition-all duration-500 cursor-pointer transform"
     style={{ 
-      transition: "transform 0.4s ease-in-out, box-shadow 0.4s ease, background-color 0.4s ease",
+      transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease, background-color 0.3s ease",
       filter: "drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.1))"
     }}
     _hover={{ bgGradient: "linear(to-r, blue.400, blue.700)" }} 
@@ -141,18 +141,16 @@ const Dashboard = () => {
     <Text 
       textAlign="center" 
       fontWeight="bold"
-      fontSize={{ base: '2xl', sm: '3xl' }}  // Aumentando el tamaño del título
-      color="white"  // Usando blanco para contraste
-      className="text-shadow-md"  // Sombra en el texto para mejor legibilidad
+      fontSize={{ base: 'lg', sm: 'xl', lg: '2xl' }}  // Ajusté el tamaño de la fuente
+      color="white"
     >
       Matemáticas
     </Text>
     <Text 
       textAlign="center" 
-      fontSize={{ base: 'md', sm: 'lg' }}  // Aumentando el tamaño del subtítulo
-      color="white"  // Usando blanco con mayor opacidad para el subtítulo
-      opacity={0.9}  // Opacidad para un estilo más suave
-      className="text-shadow-sm"  // Pequeña sombra en el subtítulo
+      fontSize={{ base: 'sm', sm: 'md', lg: 'lg' }}  // Ajusté el subtítulo
+      color="white"
+      opacity={0.8}
     >
       ¡Aprende a Restar con tiras y Fracciones con Montessori!
     </Text>
@@ -161,13 +159,13 @@ const Dashboard = () => {
   <Box 
     onClick={() => navigate('/language')} 
     bgGradient="linear(to-r, green.200, green.500)" 
-    p={6} 
-    borderRadius="2xl"
-    height={{ base: "180px", sm: "200px" }}  
-    boxShadow="lg"
-    className="hover:scale-110 hover:shadow-2xl transition-all duration-500 cursor-pointer transform"
+    p={4} 
+    borderRadius="xl" 
+    height={{ base: "140px", sm: "160px", lg: "180px" }}  
+    boxShadow="md"
+    className="hover:scale-105 hover:shadow-xl transition-all duration-500 cursor-pointer transform"
     style={{ 
-      transition: "transform 0.4s ease-in-out, box-shadow 0.4s ease, background-color 0.4s ease",
+      transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease, background-color 0.3s ease",
       filter: "drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.1))"
     }}
     _hover={{ bgGradient: "linear(to-r, green.400, green.700)" }} 
@@ -175,18 +173,16 @@ const Dashboard = () => {
     <Text 
       textAlign="center" 
       fontWeight="bold"
-      fontSize={{ base: '2xl', sm: '3xl' }} 
-      color="white"  
-      className="text-shadow-md" 
+      fontSize={{ base: 'lg', sm: 'xl', lg: '2xl' }}  
+      color="white"
     >
       Lenguaje
     </Text>
     <Text 
       textAlign="center" 
-      fontSize={{ base: 'md', sm: 'lg' }} 
-      color="white"  
-      opacity={0.9}
-      className="text-shadow-sm"  
+      fontSize={{ base: 'sm', sm: 'md', lg: 'lg' }} 
+      color="white"
+      opacity={0.8}
     >
       ¡Aprende a leer y a Formar palabras de una forma Divertida!
     </Text>
@@ -195,13 +191,13 @@ const Dashboard = () => {
   <Box 
     onClick={() => navigate('/sciences')} 
     bgGradient="linear(to-r, orange.200, orange.500)" 
-    p={6} 
-    borderRadius="2xl"
-    height={{ base: "180px", sm: "200px" }}  
-    boxShadow="lg"
-    className="hover:scale-110 hover:shadow-2xl transition-all duration-500 cursor-pointer transform"
+    p={4} 
+    borderRadius="xl"  
+    height={{ base: "140px", sm: "160px", lg: "180px" }}  
+    boxShadow="md"
+    className="hover:scale-105 hover:shadow-xl transition-all duration-500 cursor-pointer transform"
     style={{ 
-      transition: "transform 0.4s ease-in-out, box-shadow 0.4s ease, background-color 0.4s ease",
+      transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease, background-color 0.3s ease",
       filter: "drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.1))"
     }}
     _hover={{ bgGradient: "linear(to-r, orange.400, orange.700)" }} 
@@ -209,23 +205,22 @@ const Dashboard = () => {
     <Text 
       textAlign="center" 
       fontWeight="bold"
-      fontSize={{ base: '2xl', sm: '3xl' }} 
-      color="white"  
-      className="text-shadow-md"  
+      fontSize={{ base: 'lg', sm: 'xl', lg: '2xl' }}  
+      color="white"
     >
       Ciencias
     </Text>
     <Text 
       textAlign="center" 
-      fontSize={{ base: 'md', sm: 'lg' }} 
-      color="white"  
-      opacity={0.9}  
-      className="text-shadow-sm"  
+      fontSize={{ base: 'sm', sm: 'md', lg: 'lg' }} 
+      color="white"
+      opacity={0.8}
     >
       ¡Explora y conoce los seres vivos y Aprende acerca del cuerpo humano!
     </Text>
   </Box>
 </Grid>
+
 
           </>
         )}

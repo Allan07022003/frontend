@@ -69,18 +69,18 @@ html, body {
 
 @media (max-width: 768px) {
   .tira {
-    height: 35px;
+    height: 30px;
     flex-basis: calc(6% * var(--length)); 
-    min-width: 60px; 
-    max-width: 90px; 
+    min-width: 5cap; 
+    max-width: 70px; 
   }
 }
 
 @media (max-width: 480px) {
   .tira {
-    height: 40px;
+    height: 30px;
     flex-basis: calc(7% * var(--length));
-    min-width: 70px; 
-    max-width: 80px;
+    min-width: 60px; 
+    max-width: 70px;
   }
 }
