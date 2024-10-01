@@ -6,8 +6,8 @@ const organTranslations = {
   corazon: "corazón",
   pulmones: "pulmones",
   estomago: "estómago",
-  higado: "hígado", // sin tilde para evitar errores
-  rinones: "riñones", // sin tilde para evitar errores
+  higado: "hígado", 
+  rinones: "riñones", 
   intestinos: "intestinos",
   cerebro: "cerebro",
 };
