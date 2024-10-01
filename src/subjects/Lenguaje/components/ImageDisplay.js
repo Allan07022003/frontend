@@ -8,7 +8,7 @@ const ImageDisplay = ({ imageUrl }) => {
           src={imageUrl}
           alt="Imagen generada"
           className="w-full max-w-xs sm:max-w-sm lg:max-w-md xl:max-w-lg h-auto object-contain"
-          style={{ maxHeight: '200px', marginBottom: '0.5rem' }} // Limitar la altura de la imagen
+          style={{ maxHeight: '200px', marginBottom: '0.5rem' }}
         />
       ) : (
         <p>Cargando imagen...</p>

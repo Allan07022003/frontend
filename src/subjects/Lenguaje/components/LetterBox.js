@@ -12,7 +12,6 @@ const LetterBox = () => {
 
   return (
     <div className="p-2 sm:p-4 w-full max-w-xs sm:max-w-md lg:max-w-lg xl:max-w-2xl mx-auto">
-      {/* Ajustamos la distribución de columnas para pantallas grandes */}
       <div className={`grid grid-cols-5 sm:grid-cols-6 lg:grid-cols-8 gap-2`}>
         {letters.map((letter, index) => (
           <Letter key={index} letter={letter} />

@@ -20,6 +20,7 @@ import {
   ModalFooter,
   useDisclosure,
   Select,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -41,8 +42,8 @@ const AdminDashboard = () => {
   const [currentStudentId, setCurrentStudentId] = useState(null);
   const [teacherGrade, setTeacherGrade] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isSmallScreen] = useMediaQuery("(max-width: 768px)"); // Media query para responsividad
 
-  // Obtener estudiantes asignados al maestro autenticado y el grado del maestro
   useEffect(() => {
     const fetchStudentsAndTeacherInfo = async () => {
       const token = localStorage.getItem("token");
@@ -98,29 +99,25 @@ const AdminDashboard = () => {
     fetchStudentsAndTeacherInfo();
   }, []);
 
-  // Manejar la entrada en los formularios
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewStudent({ ...newStudent, [name]: value });
   };
 
-  // Función para validar el formulario
   const validateForm = () => {
-    const { firstName, lastName, email, password, age, grade } = newStudent;
+    const { firstName, lastName, email, age, grade } = newStudent;
 
-    if (!firstName || !lastName || !email || !password || !age || !grade) {
+    if (!firstName || !lastName || !email || !age || !grade) {
       toast.error("Por favor completa todos los campos");
       return false;
     }
 
-    // Validación de email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       toast.error("Correo electrónico no válido");
       return false;
     }
 
-    // Validación de la edad (que sea un número mayor a 4)
     if (age <= 4) {
       toast.error("La edad debe ser mayor a 4");
       return false;
@@ -129,9 +126,8 @@ const AdminDashboard = () => {
     return true;
   };
 
-  // Crear un nuevo estudiante
   const handleCreateStudent = async () => {
-    if (!validateForm()) return; // Validar antes de crear
+    if (!validateForm()) return;
 
     try {
       const token = localStorage.getItem("token");
@@ -148,7 +144,7 @@ const AdminDashboard = () => {
           },
         }
       );
-      setStudents([...students, response.data]); // Añadir el nuevo estudiante al estado
+      setStudents([...students, response.data]);
       toast.success("Estudiante creado exitosamente");
       setNewStudent({
         firstName: "",
@@ -158,7 +154,7 @@ const AdminDashboard = () => {
         age: "",
         grade: "",
       });
-      setIsEditing(false); // Resetear el estado de edición
+      setIsEditing(false); 
       onClose();
     } catch (error) {
       console.error("Error creando estudiante:", error);
@@ -166,9 +162,8 @@ const AdminDashboard = () => {
     }
   };
 
-  // Abrir el modal de crear estudiante
   const handleOpenCreateStudent = () => {
-    setIsEditing(false); // Cambiar a modo de creación
+    setIsEditing(false); 
     setNewStudent({
       firstName: "",
       lastName: "",
@@ -180,43 +175,47 @@ const AdminDashboard = () => {
     onOpen();
   };
 
-  // Editar un estudiante (abre el modal con los datos del estudiante)
   const handleEditStudent = (student) => {
-    setIsEditing(true); // Cambiar a modo de edición
+    setIsEditing(true); 
     setCurrentStudentId(student._id);
     setNewStudent({
       firstName: student.firstName,
       lastName: student.lastName,
       email: student.email,
-      password: "",
+      password: "", 
       age: student.age,
       grade: student.grade,
     });
     onOpen();
   };
 
-  // Actualizar un estudiante
   const handleUpdateStudent = async () => {
-    if (!validateForm()) return; // Validar antes de actualizar
+    if (!validateForm()) return; 
 
     try {
       const token = localStorage.getItem("token");
+      const updateData = { ...newStudent, grade: teacherGrade };
+      if (!newStudent.password) {
+        delete updateData.password;
+      }
+
       const response = await axios.put(
         `https://backend-montessori-c4e81f9ce871.herokuapp.com/api/teachers/students/${currentStudentId}`,
-        { ...newStudent, grade: teacherGrade },
+        updateData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
+
       setStudents(
         students.map((student) =>
           student._id === currentStudentId ? response.data : student
         )
       );
       toast.success("Estudiante actualizado exitosamente");
-      setIsEditing(false); // Resetear el estado de edición
+      setIsEditing(false); 
       setNewStudent({
         firstName: "",
         lastName: "",
@@ -232,8 +231,12 @@ const AdminDashboard = () => {
     }
   };
 
-  // Eliminar un estudiante
   const handleDeleteStudent = async (id) => {
+    const confirmDelete = window.confirm(
+      "¿Estás seguro de que deseas eliminar este estudiante?"
+    );
+    if (!confirmDelete) return;
+
     try {
       const token = localStorage.getItem("token");
       await axios.delete(
@@ -276,7 +279,7 @@ const AdminDashboard = () => {
       <Box
         maxW="4xl"
         mx="auto"
-        mt="24"
+        mt={isSmallScreen ? "16" : "24"} 
         p="6"
         borderRadius="lg"
         boxShadow="xl"
@@ -284,53 +287,54 @@ const AdminDashboard = () => {
         textAlign="center"
         fontFamily="'Comic Sans MS', cursive, sans-serif"
       >
-        <Heading mb="4" fontSize="2xl" color="#5A67D8">
+        <Heading mb="4" fontSize={isSmallScreen ? "xl" : "2xl"} color="#5A67D8">
           Estudiantes Asignados
         </Heading>
         <Text mb="4" color="#4A5568">
           Aquí puedes gestionar la información de los estudiantes.
         </Text>
 
-        <Table variant="striped" colorScheme="teal" mb="6">
-          <Thead>
-            <Tr>
-              <Th>Nombre</Th>
-              <Th>Grado</Th>
-              <Th>Edad</Th>
-              <Th>Email</Th>
-              <Th>Acciones</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {students.map((student) => (
-              <Tr key={student._id}>
-                <Td>
-                  {student.firstName} {student.lastName}
-                </Td>
-                <Td>{student.grade || "No asignado"}</Td>
-                <Td>{student.age || "Sin edad registrada"}</Td>
-                <Td>{student.email}</Td>
-                <Td>
-                  <Button
-                    colorScheme="teal"
-                    size="sm"
-                    mr="2"
-                    onClick={() => handleEditStudent(student)}
-                  >
-                    Editar
-                  </Button>
-                  <Button
-                    colorScheme="red"
-                    size="sm"
-                    onClick={() => handleDeleteStudent(student._id)}
-                  >
-                    Eliminar
-                  </Button>
-                </Td>
+        {/* Tabla responsiva */}
+        <Box overflowX="auto">
+          <Table variant="striped" colorScheme="teal" mb="6" size={isSmallScreen ? "sm" : "md"}>
+            <Thead>
+              <Tr>
+                <Th>Nombre</Th>
+                <Th>Grado</Th>
+                <Th>Edad</Th>
+                <Th>Email</Th>
+                <Th>Acciones</Th>
               </Tr>
-            ))}
-          </Tbody>
-        </Table>
+            </Thead>
+            <Tbody>
+              {students.map((student) => (
+                <Tr key={student._id}>
+                  <Td>{student.firstName} {student.lastName}</Td>
+                  <Td>{student.grade || "No asignado"}</Td>
+                  <Td>{student.age || "Sin edad registrada"}</Td>
+                  <Td>{student.email}</Td>
+                  <Td>
+                    <Button
+                      colorScheme="teal"
+                      size={isSmallScreen ? "xs" : "sm"}
+                      mr="2"
+                      onClick={() => handleEditStudent(student)}
+                    >
+                      Editar
+                    </Button>
+                    <Button
+                      colorScheme="red"
+                      size={isSmallScreen ? "xs" : "sm"}
+                      onClick={() => handleDeleteStudent(student._id)}
+                    >
+                      Eliminar
+                    </Button>
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </Box>
 
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />

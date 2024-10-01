@@ -9,7 +9,7 @@ const FractionPiece = ({ fraction, color, label, onDragStart, onDragEnd }) => {
       onDragStart={(e) => {
         const pieceData = { fraction, color };
         e.dataTransfer.setData('piece', JSON.stringify(pieceData));
-        e.target.style.opacity = "0.5";
+        e.target.style.opacity = "1";
       }}
       onDragEnd={onDragEnd}
     >

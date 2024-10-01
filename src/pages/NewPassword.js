@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useAssistant } from '../context/AssistantContext'; // Para notificaciones
+import { useAssistant } from '../context/AssistantContext'; 
 import { Box, Button, FormControl, FormLabel, Input, Heading, Text } from '@chakra-ui/react';
 
 const ResetPasswordForm = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const { showAssistantMessage } = useAssistant();
-  const { token } = useParams();  // El token será parte de la URL
+  const { token } = useParams();  
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -29,7 +29,7 @@ const ResetPasswordForm = () => {
         password,
       });
       showAssistantMessage('Contraseña restablecida correctamente', 'success');
-      navigate('/login'); // Redirige al login después de restablecer la contraseña
+      navigate('/login'); 
     } catch (error) {
       showAssistantMessage('Error al restablecer la contraseña', 'error');
       console.error('Error:', error);

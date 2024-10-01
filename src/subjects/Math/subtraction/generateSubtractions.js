@@ -1,9 +1,26 @@
-//generateSubtractions.js
-const generateSubtractions = () => {
-    const minuendo = Math.floor(Math.random() * 9) + 1;  // Genera un número entre 1 y 9
-    const sustraendo = Math.floor(Math.random() * minuendo); // Genera un número menor o igual al minuendo
-    return { minuendo, sustraendo };
-  };
+const generateSubtractions = (difficulty, existingSubtractions) => {
+  let maxMinuendo;
+
+  if (difficulty === 1) { 
+    maxMinuendo = 8;
+  } else if (difficulty === 2) { 
+    maxMinuendo = 12;
+  } else if (difficulty === 3) { 
+    maxMinuendo = 20;
+  }
+
+  let minuendo, sustraendo;
   
-  export default generateSubtractions;
-  
+  do {
+    minuendo = Math.floor(Math.random() * maxMinuendo) + 1;
+    sustraendo = Math.floor(Math.random() * minuendo);
+  } while (
+    sustraendo === 0 || 
+    minuendo === 0 || 
+    existingSubtractions.some(ejercicio => ejercicio.minuendo === minuendo && ejercicio.sustraendo === sustraendo)
+  ); 
+
+  return { minuendo, sustraendo };
+};
+
+export default generateSubtractions;

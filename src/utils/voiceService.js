@@ -12,14 +12,13 @@ export const speak = async (text) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ text }), // Enviar el texto a convertir en voz
+      body: JSON.stringify({ text }), 
     });
 
     if (!response.ok) {
       throw new Error('Error al obtener la voz');
     }
 
-    // Obtener el archivo de audio como Blob y reproducirlo
     const audioBlob = await response.blob();
     const audioUrl = window.URL.createObjectURL(audioBlob);
     currentAudio = new Audio(audioUrl);

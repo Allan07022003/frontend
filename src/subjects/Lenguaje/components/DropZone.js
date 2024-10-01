@@ -2,7 +2,7 @@ import React from 'react';
 import { useDrop } from 'react-dnd';
 import { useAssistant } from '../../../context/AssistantContext';
 
-const vowels = ['A', 'E', 'I', 'O', 'U']; // Definir las vocales
+const vowels = ['A', 'E', 'I', 'O', 'U']; 
 
 const DropZone = ({ targetWord, enteredLetters, setEnteredLetters, onWordComplete, attempts, setAttempts }) => {
   const [{ isOver }, drop] = useDrop(() => ({
@@ -18,32 +18,28 @@ const DropZone = ({ targetWord, enteredLetters, setEnteredLetters, onWordComplet
   const handleLetterDrop = (letter) => {
     const emptyIndex = enteredLetters.findIndex((l) => l === null);
 
-    // Si no hay espacio disponible, no hace nada
     if (emptyIndex === -1) return;
 
-    // Validar si la letra corresponde con la letra de la palabra en esa posición
     if (letter.toLowerCase() === targetWord[emptyIndex].toLowerCase()) {
       const updatedLetters = [...enteredLetters];
       updatedLetters[emptyIndex] = letter;
       setEnteredLetters(updatedLetters);
 
-      // Verificar si la palabra está completa
       if (updatedLetters.every((l) => l !== null)) {
         const formedWord = updatedLetters.join('').toLowerCase();
         if (formedWord === targetWord.toLowerCase()) {
-          onWordComplete(true); // Palabra correcta
+          onWordComplete(true); 
         } else {
-          onWordComplete(false); // Palabra incorrecta
+          onWordComplete(false); 
         }
       }
     } else {
-      // Mostrar alerta si la letra no es correcta
       showAssistantMessage(`La letra '${letter}' no es correcta para esta posición.`, 'error');
     }
   };
 
   const getColorForLetter = (letter) => {
-    if (!letter) return 'bg-white'; // Si no hay letra, usar fondo blanco
+    if (!letter) return 'bg-white'; 
     return vowels.includes(letter.toUpperCase()) ? 'bg-blue-500 text-white' : 'bg-red-500 text-white';
   };
 

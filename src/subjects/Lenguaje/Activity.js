@@ -9,9 +9,10 @@ import { useAssistant } from "../../context/AssistantContext";
 import { speak } from "../../utils/voiceService";
 import LetterBox from "./components/LetterBox";
 import Header from "../../components/Header";
+import { isMobile } from 'react-device-detect';
 
 const Activity = () => {
-  // Guardar la dificultad en localStorage y obtenerla si existe
+
   const [difficulty, setDifficulty] = useState(
     () => localStorage.getItem("difficulty") || "easy"
   );
@@ -39,9 +40,8 @@ const Activity = () => {
   const { showAssistantMessage } = useAssistant();
   const currentAnimation = animationsData[difficulty][currentIndex];
 
-  // Guardar en localStorage el estado de la dificultad, letras y animación
   useEffect(() => {
-    localStorage.setItem("difficulty", difficulty); // Guardar la dificultad seleccionada
+    localStorage.setItem("difficulty", difficulty); 
     localStorage.setItem("currentIndex", JSON.stringify(currentIndex));
 
     const storedLetters =
@@ -49,22 +49,18 @@ const Activity = () => {
     storedLetters[currentIndex] = enteredLetters;
     localStorage.setItem("enteredLetters", JSON.stringify(storedLetters));
 
-    // Guardar la URL de la animación en localStorage
     const storedAnimations =
       JSON.parse(localStorage.getItem("animationUrls")) || {};
     storedAnimations[currentIndex] = currentAnimation.animationUrl;
     localStorage.setItem("animationUrls", JSON.stringify(storedAnimations));
 
-    // Actualizar la URL de la animación
     setAnimationUrl(currentAnimation.animationUrl);
   }, [currentIndex, enteredLetters, currentAnimation.animationUrl, difficulty]);
 
-  // Limpiar el estado de intentos cuando se cambie de palabra
   useEffect(() => {
     setAttempts(0);
   }, [currentIndex]);
 
-  // Actualizar los slots de letras al cambiar la dificultad o la palabra actual
   useEffect(() => {
     setEnteredLetters(
       Array(animationsData[difficulty][currentIndex].word.length).fill(null)
@@ -72,40 +68,45 @@ const Activity = () => {
     setAnimationUrl(animationsData[difficulty][currentIndex].animationUrl);
   }, [difficulty, currentIndex]);
 
-  // Función para manejar cuando el niño complete la palabra
   const handleWordComplete = (isCorrect) => {
     if (isCorrect) {
       showAssistantMessage(
         "¡Correcto! Has formado la palabra correctamente.",
         "success"
       );
-      speak(currentAnimation.word);
-
-      // Marcar la palabra como completada pero mantener las letras
+  
+      if ('speechSynthesis' in window) {
+        if (isMobile) {
+          const mensaje = currentAnimation.word;
+          document.body.addEventListener('click', () => {
+            speak(mensaje);
+          }, { once: true }); 
+        } else {
+          speak(currentAnimation.word);
+        }
+      }
+  
       setCompletedWords({
         ...completedWords,
         [currentIndex]: true,
       });
-
-      // Guardar las palabras completadas en localStorage
+  
       const storedWords =
         JSON.parse(localStorage.getItem("completedWords")) || {};
       storedWords[currentIndex] = true;
       localStorage.setItem("completedWords", JSON.stringify(storedWords));
-
-      // Esperar 5 segundos antes de pasar a la siguiente palabra
+  
       setTimeout(() => {
-        handleNext(); // Llamar a la función para avanzar a la siguiente palabra
+        handleNext();
       }, 5000);
     } else {
       showAssistantMessage("Palabra incorrecta. Intenta de nuevo.", "error");
     }
   };
+  
 
-  // Función para avanzar a la siguiente palabra
   const handleNext = () => {
     if (currentIndex < animationsData[difficulty].length - 1) {
-      // Guardar el progreso antes de avanzar
       const storedLetters =
         JSON.parse(localStorage.getItem("enteredLetters")) || {};
       storedLetters[currentIndex] = enteredLetters;
@@ -123,10 +124,8 @@ const Activity = () => {
     }
   };
 
-  // Función para regresar a la palabra anterior
   const handlePrevious = () => {
     if (currentIndex > 0) {
-      // Guardar el progreso antes de regresar
       const storedLetters =
         JSON.parse(localStorage.getItem("enteredLetters")) || {};
       storedLetters[currentIndex] = enteredLetters;
@@ -144,14 +143,12 @@ const Activity = () => {
     }
   };
 
-  // Función para borrar las letras en el DropZone
   const handleClearLetters = () => {
     setEnteredLetters(Array(currentAnimation.word.length).fill(null));
   };
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="min-h-screen bg-gradient-to-r from-pink-200 via-purple-200 to-blue-200 flex flex-col items-center justify-start py-4 relative">
-        {/* Fondo decorativo */}
         <div
           className="absolute inset-0 z-0 bg-cover bg-center"
           style={{
@@ -162,7 +159,6 @@ const Activity = () => {
           }}
         ></div>
   
-        {/* Header */}
         <Header
           title="Lenguaje"
           leftButtonText="Volver"
@@ -174,9 +170,7 @@ const Activity = () => {
           className="z-10"
         />
   
-        {/* Contenedor principal dinámico con media queries personalizadas */}
         <div className="flex flex-col items-center justify-start mt-16 sm:mt-24 lg:mt-28 xl:mt-32 relative z-10 bg-white bg-opacity-90 rounded-lg p-2 sm:p-4 shadow-lg w-full xs-320:max-w-xs xs-350:max-w-sm xs-390:max-w-md xs-430:max-w-lg lg:max-w-2xl xl:max-w-3xl mx-auto min-h-[60vh] space-y-4 sm:space-y-6">
-          {/* Selector de dificultad */}
           <div className="flex flex-col sm:flex-row items-center justify-center space-y-1 sm:space-y-0 w-full text-xs sm:text-lg">
             <label
               htmlFor="difficulty"
@@ -189,7 +183,7 @@ const Activity = () => {
               value={difficulty}
               onChange={(e) => {
                 setDifficulty(e.target.value);
-                setCurrentIndex(0); // Reiniciar a la primera palabra
+                setCurrentIndex(0); 
               }}
               className="ml-2 sm:ml-4 border-2 p-1 sm:p-2 rounded-lg bg-white shadow-md text-xs sm:text-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-pink-300"
             >
@@ -199,12 +193,10 @@ const Activity = () => {
             </select>
           </div>
   
-            {/* Animación aumentada en móviles con media queries */}
             <div className="flex justify-center items-center w-full xs-320:max-h-20 xs-350:max-h-24 xs-390:max-h-32 xs-430:max-h-36 sm:max-h-40 lg:max-h-48 mb-3">
               <AnimatedIcon animationUrl={animationUrl} className="w-full h-auto" />
             </div>
   
-          {/* DropZone más compacto */}
           <div className="w-full flex justify-center mt-1 sm:mt-2">
             <DropZone
               targetWord={currentAnimation.word}
@@ -216,7 +208,6 @@ const Activity = () => {
             />
           </div>
   
-          {/* Botón para borrar letras */}
           <button
             onClick={handleClearLetters}
             className="px-2 py-1 sm:px-4 sm:py-2 bg-red-500 text-white font-bold text-xs sm:text-lg rounded-full shadow-md hover:bg-red-600 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-300"
@@ -224,12 +215,10 @@ const Activity = () => {
             Borrar letras
           </button>
   
-          {/* Contenedor de letras (LetterBox) */}
           <div className="w-full max-w-full lg:max-w-4xl">
             <LetterBox />
           </div>
   
-          {/* Botones de navegación */}
           <div className="flex space-x-1 sm:space-x-4 text-xs sm:text-lg">
             <Navigation
               currentIndex={currentIndex}

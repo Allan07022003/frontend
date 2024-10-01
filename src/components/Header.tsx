@@ -10,9 +10,9 @@ interface HeaderProps {
   rightButtonHref?: string;
   primaryColor?: string;
   secondaryColor?: string;
-  onLogout?: () => void; // Prop opcional para manejar logout
-  onCompleteProfileClick?: () => void; // Prop opcional para manejar el click en "Completar Perfil"
-  showArrow?: boolean; // Nueva prop para mostrar/ocultar la flecha
+  onLogout?: () => void; 
+  onCompleteProfileClick?: () => void; 
+  showArrow?: boolean; 
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -23,14 +23,13 @@ const Header: React.FC<HeaderProps> = ({
   rightButtonHref,
   primaryColor = 'from-blue-400 to-purple-500',
   secondaryColor = 'bg-yellow-400 hover:bg-yellow-300',
-  onLogout, // Función de logout opcional
-  onCompleteProfileClick, // Función para abrir el modal de perfil
-  showArrow = true, // Mostrar flecha por defecto, pero puede ser opcional
+  onLogout, 
+  onCompleteProfileClick, 
+  showArrow = true, 
 }) => {
   return (
     <header className={`bg-gradient-to-r ${primaryColor} p-2 sm:p-3 md:p-5 lg:p-6 fixed top-0 left-0 w-full z-10`}>
       <div className="max-w-7xl mx-auto flex justify-between items-center">
-        {/* Botón izquierdo */}
         {onLogout ? (
           <button
             onClick={onLogout}
@@ -51,18 +50,15 @@ const Header: React.FC<HeaderProps> = ({
           </Link>
         )}
 
-        {/* Título central */}
         <h1 className="text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-extrabold text-white text-center bg-opacity-70 bg-primary-500 px-3 py-1 rounded-lg">
           {title}
         </h1>
 
-        {/* Botón derecho */}
         {onCompleteProfileClick ? (
           <button
             onClick={onCompleteProfileClick}
             className={`group flex items-center space-x-2 ${secondaryColor} text-primary-800 px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-3 lg:px-5 lg:py-4 rounded-full transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 shadow-md`}
           >
-            {/* Si "showArrow" es false, no mostramos la flecha */}
             {showArrow && <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-8 lg:h-8 group-hover:animate-bounce" />}
             <span className="text-xs sm:text-sm md:text-base lg:text-lg font-bold group-hover:underline">
               {rightButtonText}
@@ -70,7 +66,7 @@ const Header: React.FC<HeaderProps> = ({
           </button>
         ) : (
           <Link
-            to={rightButtonHref || '/'} // Si no se pasa función, sigue funcionando como enlace
+            to={rightButtonHref || '/'} 
             className={`group flex items-center space-x-2 ${secondaryColor} text-primary-800 px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-3 lg:px-5 lg:py-4 rounded-full transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 shadow-md`}
           >
             <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-8 lg:h-8 group-hover:animate-bounce" />

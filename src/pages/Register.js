@@ -3,11 +3,10 @@ import axios from 'axios';
 import { Box, Button, FormControl, FormLabel, Input, Heading, Text, Spinner } from '@chakra-ui/react';
 import { useAssistant } from '../context/AssistantContext';
 import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion'; // Importamos framer-motion para las animaciones
+import { motion } from 'framer-motion'; 
 import Figures from './components/figures';
 import './components/styles.css';
 
-// Definir animaciones de entrada y salida
 const pageTransition = {
   initial: { opacity: 0, y: 50 },
   animate: { opacity: 1, y: 0, transition: { duration: 0.8 } },
@@ -40,7 +39,6 @@ const Register = () => {
         });
         showAssistantMessage('¡Usuario registrado con éxito!', 'success');
 
-        // Pausa antes de la redirección para la transición
         setTimeout(() => {
           navigate('/login');
         }, 3000);

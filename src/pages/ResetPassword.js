@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, FormControl, FormLabel, Input, Heading } from '@chakra-ui/react'; // Importar Chakra components
-import { useAssistant } from '../context/AssistantContext'; // Usar el asistente de alertas
+import { Box, Button, FormControl, FormLabel, Input, Heading } from '@chakra-ui/react'; 
+import { useAssistant } from '../context/AssistantContext'; 
 
 const ResetPassword = () => {
   const [email, setEmail] = useState('');
-  const [role, setRole] = useState('student'); // Rol por defecto como 'student'
-  const { showAssistantMessage } = useAssistant(); // Alertas personalizadas
+  const [role, setRole] = useState('student'); 
+  const { showAssistantMessage } = useAssistant(); 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -16,17 +16,15 @@ const ResetPassword = () => {
     try {
       let apiEndpoint;
       if (role === 'student') {
-        // Ruta del estudiante
         apiEndpoint = 'https://backend-montessori-c4e81f9ce871.herokuapp.com/api/students/password-reset';
       } else if (role === 'teacher') {
-        // Ruta del profesor
         apiEndpoint = 'https://backend-montessori-c4e81f9ce871.herokuapp.com/api/teachers/password-reset';
       }
 
       await axios.post(apiEndpoint, { email });
 
       showAssistantMessage('¡Correo de recuperación enviado con éxito!', 'success');
-      navigate('/login'); // Redirigir al login tras el éxito
+      navigate('/login'); 
     } catch (error) {
       showAssistantMessage('Error al enviar el correo de recuperación', 'error');
       console.error(error);

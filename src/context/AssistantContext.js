@@ -1,5 +1,4 @@
-// src/context/AssistantContext.js
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
@@ -7,6 +6,7 @@ import Lottie from 'lottie-react';
 import successAnimation from './animations/succes.json';
 import errorAnimation from './animations/error.json';
 import infoAnimation from './animations/info.json';
+import { useLocation } from 'react-router-dom'; 
 
 const AssistantContext = createContext();
 
@@ -50,6 +50,7 @@ const Character = ({ animation }) => {
 };
 
 export const AssistantProvider = ({ children }) => {
+  const location = useLocation(); 
   const showAssistantMessage = (message, type) => {
     const animation = animations[type] || infoAnimation;
 
@@ -77,6 +78,10 @@ export const AssistantProvider = ({ children }) => {
       }
     );
   };
+
+  useEffect(() => {
+    toast.dismiss(); 
+  }, [location]);
 
   return (
     <AssistantContext.Provider value={{ showAssistantMessage }}>

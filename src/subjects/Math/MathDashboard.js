@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import CustomHeader from '../../components/Header2'; // Asegúrate de importar correctamente el nuevo Header
+import CustomHeader from '../../components/Header2'; 
 
 const MathDashboard = () => {
   return (

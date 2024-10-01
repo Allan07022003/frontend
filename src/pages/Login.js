@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAssistant } from '../context/AssistantContext'; // Importar alertas
-import { Box, Button, FormControl, FormLabel, Input, Heading, Text } from '@chakra-ui/react'; // Importar Chakra components
-import Figures from './components/figures'; // Importamos las figuras
-import './components/styles.css';  // Reutilizamos las figuras geométricas
+import { useAssistant } from '../context/AssistantContext'; 
+import { Box, Button, FormControl, FormLabel, Input, Heading, Text } from '@chakra-ui/react'; 
+import Figures from './components/figures'; 
+import './components/styles.css'; 
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { showAssistantMessage } = useAssistant(); // Usar las alertas personalizadas
+  const { showAssistantMessage } = useAssistant(); 
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -26,16 +26,15 @@ const Login = () => {
         password,
       });
 
-      // Almacenar el token y el rol en el localStorage
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('role', response.data.role);
 
       if (response.data.role === 'student') {
         showAssistantMessage('¡Inicio de sesión como estudiante exitoso!', 'success');
-        navigate('/dashboard'); // Redirigir al dashboard del alumno
+        navigate('/dashboard'); 
       } else if (response.data.role === 'teacher') {
         showAssistantMessage('¡Inicio de sesión como profesor exitoso!', 'success');
-        navigate('/adminDashboard'); // Redirigir al panel de administración
+        navigate('/adminDashboard');
       }
     } catch (error) {
       showAssistantMessage('Credenciales incorrectas', 'error');
@@ -44,10 +43,10 @@ const Login = () => {
   };
 
   return (
-    <div className="background-container"> {/* Reutilizamos el fondo */}
-      <Figures /> {/* Reutilizamos las figuras geométricas */}
+    <div className="background-container"> 
+      <Figures /> 
       <Box
-        maxW={{ base: "90%", md: "lg", lg: "lg" }} // Ajuste de tamaño responsive
+        maxW={{ base: "90%", md: "lg", lg: "lg" }} 
         mx="auto"
         mt="10"
         p="6"

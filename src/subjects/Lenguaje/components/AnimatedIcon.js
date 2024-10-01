@@ -3,7 +3,7 @@ import { Player } from '@lottiefiles/react-lottie-player';
 
 const AnimatedIcon = ({ animationUrl }) => {
   if (!animationUrl) {
-    return <div>Cargando animación...</div>; // Fallback si no hay URL de animación
+    return <div>Cargando animación...</div>; 
   }
 
   return (

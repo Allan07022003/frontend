@@ -1,205 +1,195 @@
-/* Estilos generales */
 .background-container {
-    background: linear-gradient(to right, #FF99C8, #99CCFF, #D4A5FF, #99FFCC); /* Degradado lineal con tonos suaves */
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  /* Figuras geométricas */
-  .figure {
-    position: absolute;
-    animation: spin 20s linear infinite;
-    transition: transform 0.5s ease-in-out;
-  }
-  
-  .circle {
-    border-radius: 50%;
-  }
-  
-  .square {
-    border-radius: 10%;
-    animation: reverse-spin 25s linear infinite;
-  }
-  
-  .rectangle {
-    border-radius: 10%;
-    animation: spin 28s linear infinite;
-  }
-  
-  /* Figuras adicionales relacionadas con Montessori */
-  .rule {
-    width: 150px;
-    height: 20px;
-    background-color: #32CD32;
-    border-radius: 5px;
-    top: 30%;
-    left: 10%;
-    animation: spin 30s linear infinite;
-  }
-  
-  .book {
-    width: 120px;
-    height: 80px;
-    background-color: #1E90FF;
-    border-radius: 5px;
-    bottom: 30%;
-    right: 15%;
-    animation: reverse-spin 22s linear infinite;
-  }
-  
-  /* Colores para las figuras */
-  .yellow {
-    width: 100px;
-    height: 100px;
-    background-color: #FFD700;
-    top: 10%;
-    left: 5%;
-  }
-  
-  .cyan {
-    width: 120px;
-    height: 120px;
-    background-color: #00CED1;
-    bottom: 10%;
-    right: 5%;
-  }
-  
-  .red {
-    width: 80px;
-    height: 80px;
-    background-color: #FF6347;
-    bottom: 20%;
-    left: 25%;
-  }
-  
-  .purple {
-    width: 140px;
-    height: 140px;
-    background-color: #4B0082;
-    top: 15%;
-    right: 20%;
-  }
-  
-  /* Estilos para el contenedor de formularios */
-  .form-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-  }
-  
-  /* Estilos del formulario */
+  background: linear-gradient(to right, #FF99C8, #99CCFF, #D4A5FF, #99FFCC);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+  position: relative;
+  overflow: hidden; 
+}
+
+.figure {
+  position: absolute;
+  animation: spin 20s linear infinite;
+  transition: transform 0.5s ease-in-out;
+}
+
+.circle {
+  border-radius: 50%;
+}
+
+.square {
+  border-radius: 10%;
+  animation: reverse-spin 25s linear infinite;
+}
+
+.rectangle {
+  border-radius: 10%;
+  animation: spin 28s linear infinite;
+}
+
+.rule {
+  width: 150px;
+  height: 20px;
+  background-color: #32CD32;
+  border-radius: 5px;
+  top: 30%;
+  left: 10%;
+  animation: spin 30s linear infinite;
+}
+
+.book {
+  width: 120px;
+  height: 80px;
+  background-color: #1E90FF;
+  border-radius: 5px;
+  bottom: 30%;
+  right: 15%;
+  animation: reverse-spin 22s linear infinite;
+}
+
+/* Colores para las figuras */
+.yellow {
+  width: 100px;
+  height: 100px;
+  background-color: #FFD700;
+  top: 10%;
+  left: 5%;
+}
+
+.cyan {
+  width: 120px;
+  height: 120px;
+  background-color: #00CED1;
+  bottom: 10%;
+  right: 5%;
+}
+
+.red {
+  width: 80px;
+  height: 80px;
+  background-color: #FF6347;
+  bottom: 20%;
+  left: 25%;
+}
+
+.purple {
+  width: 140px;
+  height: 140px;
+  background-color: #4B0082;
+  top: 15%;
+  right: 20%;
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+}
+
+.form {
+  max-width: 400px; 
+  width: 100%;
+  background: white;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+}
+
+.form-heading {
+  font-size: 1.8rem;
+  color: #5A67D8;
+  margin-bottom: 20px;
+}
+
+.form-control {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  text-align: left;
+  color: #5A67D8;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #5A67D8;
+  border-radius: 5px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-input:focus {
+  border-color: #FF4500;
+  box-shadow: 0 0 5px rgba(255, 99, 71, 0.5);
+}
+
+.form-button {
+  width: 100%;
+  background: linear-gradient(to right, #7928CA, #FF0080);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.form-button:hover {
+  background: linear-gradient(to right, #FF7F50, #FF4500);
+}
+
+.form-footer {
+  margin-top: 20px;
+  color: #FF0080;
+}
+
+.form-link {
+  color: #FF0080;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.login-form-container .form {
+  max-width: 360px; 
+}
+
+.register-form-container .form {
+  max-width: 380px; 
+}
+
+@media (min-width: 1200px) {
   .form {
-    max-width: 400px; /* Ajuste inicial */
-    width: 100%;
-    background: white;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    font-family: 'Comic Sans MS', cursive, sans-serif;
+    max-width: 500px; 
+    padding: 50px 70px; 
   }
-  
-  .form-heading {
-    font-size: 1.8rem;
-    color: #5A67D8;
-    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .form {
+    max-width: 90%; 
   }
-  
-  .form-control {
-    margin-bottom: 20px;
+}
+
+@media (max-width: 480px) {
+  .form {
+    max-width: 85%; 
+    padding: 30px;
   }
-  
-  .form-label {
-    display: block;
-    text-align: left;
-    color: #5A67D8;
-    font-weight: bold;
-    transition: color 0.3s;
-  }
-  
-  .form-input {
-    width: 100%;
-    padding: 10px;
-    border: 2px solid #5A67D8;
-    border-radius: 5px;
-    transition: border-color 0.3s, box-shadow 0.3s;
-  }
-  
-  .form-input:focus {
-    border-color: #FF4500;
-    box-shadow: 0 0 5px rgba(255, 99, 71, 0.5);
-  }
-  
-  .form-button {
-    width: 100%;
-    background: linear-gradient(to right, #7928CA, #FF0080);
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  
-  .form-button:hover {
-    background: linear-gradient(to right, #FF7F50, #FF4500);
-  }
-  
-  .form-footer {
-    margin-top: 20px;
-    color: #FF0080;
-  }
-  
-  .form-link {
-    color: #FF0080;
-    font-weight: bold;
-    text-decoration: underline;
-  }
-  
-  /* Ajustes específicos para formularios */
-  .login-form-container .form {
-    max-width: 360px; /* Tamaño ajustado del formulario de inicio de sesión */
-  }
-  
-  .register-form-container .form {
-    max-width: 380px; /* Tamaño ajustado del formulario de registro */
-  }
-  
-  /* Ajustes para pantallas más grandes */
-  @media (min-width: 1200px) {
-    .form {
-      max-width: 500px; /* Aumentamos el tamaño del formulario en pantallas grandes */
-      padding: 50px 70px; /* Ajustamos el padding */
-    }
-  }
-  
-  /* Responsividad */
-  @media (max-width: 768px) {
-    .form {
-      max-width: 90%; /* Ajustamos el formulario para pantallas medianas */
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .form {
-      max-width: 85%; /* Ajustamos el formulario para pantallas pequeñas */
-      padding: 30px;
-    }
-  }
-  
-  /* Animaciones para las figuras */
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  
-  @keyframes reverse-spin {
-    0% { transform: rotate(360deg); }
-    100% { transform: rotate(0deg); }
-  }
-  
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes reverse-spin {
+  0% { transform: rotate(360deg); }
+  100% { transform: rotate(0deg); }
+}

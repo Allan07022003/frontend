@@ -4,7 +4,7 @@ import { useDrop } from 'react-dnd';
 const WordSlot = ({ index, letter, onLetterDrop }) => {
   const [{ isOver }, drop] = useDrop({
     accept: 'LETTER',
-    drop: (item) => onLetterDrop(item.letter), // Soltar la letra en el slot
+    drop: (item) => onLetterDrop(item.letter), 
     collect: (monitor) => ({
       isOver: monitor.isOver(),
     }),

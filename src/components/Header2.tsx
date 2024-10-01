@@ -4,14 +4,14 @@ import { Home, ArrowLeft } from 'lucide-react';
 
 interface HeaderProps {
   title: string;
-  leftButtonText?: string; // Botón izquierdo opcional
-  leftButtonHref?: string; // Enlace opcional para el botón izquierdo
-  rightButtonText?: string; // Botón derecho opcional
-  rightButtonHref?: string; // Enlace opcional para el botón derecho
-  primaryColor?: string; // Color primario para el gradiente
-  secondaryColor?: string; // Color secundario para los botones
-  showLeftButton?: boolean; // Control para mostrar el botón izquierdo
-  showRightButton?: boolean; // Control para mostrar el botón derecho
+  leftButtonText?: string; 
+  leftButtonHref?: string; 
+  rightButtonText?: string; 
+  rightButtonHref?: string; 
+  primaryColor?: string; 
+  secondaryColor?: string; 
+  showLeftButton?: boolean;
+  showRightButton?: boolean; 
 }
 
 const CustomHeader: React.FC<HeaderProps> = ({
@@ -22,13 +22,12 @@ const CustomHeader: React.FC<HeaderProps> = ({
   rightButtonHref,
   primaryColor = 'from-blue-400 to-purple-500',
   secondaryColor = 'bg-yellow-400 hover:bg-yellow-300',
-  showLeftButton = true, // Por defecto mostramos el botón izquierdo
-  showRightButton = true, // Por defecto mostramos el botón derecho
+  showLeftButton = true, 
+  showRightButton = true, 
 }) => {
   return (
     <header className={`bg-gradient-to-r ${primaryColor} p-2 sm:p-3 md:p-5 lg:p-6 fixed top-0 left-0 w-full z-10`}>
       <div className="max-w-7xl mx-auto flex justify-between items-center">
-        {/* Botón izquierdo, solo se muestra si showLeftButton es true */}
         {showLeftButton && (
           <Link
             to={leftButtonHref || '/'}
@@ -41,12 +40,10 @@ const CustomHeader: React.FC<HeaderProps> = ({
           </Link>
         )}
 
-        {/* Título central */}
         <h1 className="flex-grow text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-extrabold text-white text-center bg-opacity-70 bg-primary-500 px-3 py-1 rounded-lg">
           {title}
         </h1>
 
-        {/* Botón derecho, solo se muestra si showRightButton es true */}
         {showRightButton && (
           <Link
             to={rightButtonHref || '/'}

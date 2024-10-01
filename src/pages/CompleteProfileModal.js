@@ -25,13 +25,11 @@ const CompleteProfileModal = ({ isOpen, onClose, onProfileComplete }) => {
   const toast = useToast();
   const token = localStorage.getItem('token');
 
-  // Validación básica para evitar inyección SQL
   const validateInput = (input) => {
     const sqlInjectionRegex = /['";\-]/;
     return !sqlInjectionRegex.test(input);
   };
 
-  // Verificación inicial solo si el modal está abierto
   useEffect(() => {
     const checkProfileCompletion = async () => {
       try {
@@ -44,7 +42,6 @@ const CompleteProfileModal = ({ isOpen, onClose, onProfileComplete }) => {
           }
         );
 
-        // Solo mostrar el asistente si el perfil no está completo
         if (!response.data.isComplete) {
           showAssistantMessage('Por favor completa tu perfil para continuar', 'info');
         }
@@ -58,7 +55,6 @@ const CompleteProfileModal = ({ isOpen, onClose, onProfileComplete }) => {
     }
   }, [token, isOpen, showAssistantMessage]);
 
-  // Manejar el submit del perfil
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -94,8 +90,8 @@ const CompleteProfileModal = ({ isOpen, onClose, onProfileComplete }) => {
       );
 
       showAssistantMessage('Perfil completado con éxito', 'success');
-      onProfileComplete(); // Actualiza el estado del perfil en el Dashboard
-      onClose(); // Cierra el modal
+      onProfileComplete(); 
+      onClose(); 
     } catch (error) {
       toast({
         title: 'Error',
@@ -112,8 +108,8 @@ const CompleteProfileModal = ({ isOpen, onClose, onProfileComplete }) => {
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
       <ModalContent
-        maxW={{ base: '90%', sm: '400px' }} // Tamaño responsivo del modal
-        p={{ base: 2, sm: 6 }} // Padding responsivo
+        maxW={{ base: '90%', sm: '400px' }} 
+        p={{ base: 2, sm: 6 }} 
       >
         <ModalHeader>Completa tu perfil</ModalHeader>
         <ModalCloseButton />

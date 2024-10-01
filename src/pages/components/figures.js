@@ -8,7 +8,6 @@ const Figures = () => {
       <div className="figure square cyan"></div>
       <div className="figure circle red"></div>
       <div className="figure rectangle purple"></div>
-      {/* Nuevas figuras educativas */}
       <div className="figure rule green"></div>
       <div className="figure book blue"></div>
     </>

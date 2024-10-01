@@ -2,26 +2,25 @@ import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import { useAssistant } from "../../../context/AssistantContext";
 import { Player } from "@lottiefiles/react-lottie-player";
-import animationsData from "../../../utils/dataBank"; // Asegúrate de que esta ruta sea correcta
+import animationsData from "../../../utils/dataBank"; 
 
 const BiologiaBasica = () => {
   const { showAssistantMessage } = useAssistant();
-  const [currentIndex, setCurrentIndex] = useState(0); // Control del índice actual
+  const [currentIndex, setCurrentIndex] = useState(0); 
   const [attempts, setAttempts] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false); // Desactivar botones después de un clic
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false); 
 
-  const currentImage = animationsData[currentIndex]; // Obtener la imagen actual con base en el índice
+  const currentImage = animationsData[currentIndex]; 
 
   useEffect(() => {
-    // Mostrar pregunta al niño sobre la imagen actual
     showAssistantMessage(
       `¿La siguiente imagen representa a un ser vivo o no vivo?`,
       "info"
     );
 
     const timer = setTimeout(() => {
-      showAssistantMessage(null); // Ocultar la alerta después de 12 segundos
+      showAssistantMessage(null); 
     }, 12000);
 
     return () => clearTimeout(timer);
@@ -32,7 +31,7 @@ const BiologiaBasica = () => {
     const seleccionCorrecta =
       (selection === "Vivo" && esVivo) || (selection === "No Vivo" && !esVivo);
 
-    setIsButtonDisabled(true); // Desactivar botones después del primer clic
+    setIsButtonDisabled(true); 
 
     if (seleccionCorrecta) {
       showAssistantMessage(
@@ -43,10 +42,10 @@ const BiologiaBasica = () => {
       );
       setTimeout(() => {
         if (currentIndex < animationsData.length - 1) {
-          setCurrentIndex(currentIndex + 1); // Avanzar a la siguiente animación
-          setAttempts(0); // Reiniciar intentos
-          setIsLoading(true); // Preparar la siguiente animación
-          setIsButtonDisabled(false); // Reactivar los botones después de la nueva animación
+          setCurrentIndex(currentIndex + 1);
+          setAttempts(0); 
+          setIsLoading(true); 
+          setIsButtonDisabled(false); 
         } else {
           showAssistantMessage("¡Has completado la actividad!", "info");
         }
@@ -58,14 +57,13 @@ const BiologiaBasica = () => {
         }.`,
         "error"
       );
-      setAttempts(attempts + 1); // Incrementar intentos
-      setIsButtonDisabled(false); // Permitir reintento
+      setAttempts(attempts + 1); 
+      setIsButtonDisabled(false); 
     }
   };
 
-  // Función para manejar la carga de la animación y quitar el spinner
   const handleAnimationLoaded = () => {
-    setIsLoading(false); // Una vez cargada la animación, quitar el spinner
+    setIsLoading(false); 
   };
 
   return (
@@ -84,7 +82,6 @@ const BiologiaBasica = () => {
       <div className="flex flex-col items-center justify-center mt-10 w-full md:w-3/4 lg:w-1/2">
         {isLoading && (
           <div className="flex justify-center items-center">
-            {/* Indicador de carga mientras se espera la animación */}
             <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500"></div>
           </div>
         )}
@@ -93,10 +90,10 @@ const BiologiaBasica = () => {
           <Player
             autoplay
             loop
-            key={currentImage.word} // Clave única para cada animación
+            key={currentImage.word} 
             src={currentImage.animationUrl}
             onEvent={(event) => {
-              if (event === "load") handleAnimationLoaded(); // Cuando se carga la animación, quitar el spinner
+              if (event === "load") handleAnimationLoaded(); 
             }}
             style={{ width: "100%", height: "100%" }}
           />
@@ -106,27 +103,26 @@ const BiologiaBasica = () => {
           <button
             onClick={() => handleSelection("Vivo")}
             className={`bg-green-500 text-white px-8 py-2 rounded-full shadow-md hover:bg-green-600 transition transform hover:scale-105 ${isButtonDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
-            disabled={isButtonDisabled} // Desactivar botón si ya fue clickeado
+            disabled={isButtonDisabled} 
           >
             Vivo
           </button>
           <button
             onClick={() => handleSelection("No Vivo")}
             className={`bg-red-500 text-white px-8 py-2 rounded-full shadow-md hover:bg-red-600 transition transform hover:scale-105 ${isButtonDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
-            disabled={isButtonDisabled} // Desactivar botón si ya fue clickeado
+            disabled={isButtonDisabled}
           >
             No Vivo
           </button>
         </div>
 
         <div className="flex space-x-4 mt-8">
-          {/* Botón Anterior */}
           <button
             onClick={() => {
               if (currentIndex > 0) {
                 setCurrentIndex(currentIndex - 1);
-                setIsLoading(true); // Preparar la animación anterior
-                setIsButtonDisabled(false); // Reactivar botones
+                setIsLoading(true); 
+                setIsButtonDisabled(false); 
               }
             }}
             className="bg-gray-500 text-white px-6 py-2 rounded-full shadow-md hover:bg-gray-600 transition transform hover:scale-105"
@@ -134,13 +130,12 @@ const BiologiaBasica = () => {
             Anterior
           </button>
 
-          {/* Botón Siguiente */}
           <button
             onClick={() => {
               if (currentIndex < animationsData.length - 1) {
                 setCurrentIndex(currentIndex + 1);
-                setIsLoading(true); // Preparar la siguiente animación
-                setIsButtonDisabled(false); // Reactivar botones
+                setIsLoading(true); 
+                setIsButtonDisabled(false); 
               }
             }}
             className="bg-gray-500 text-white px-6 py-2 rounded-full shadow-md hover:bg-gray-600 transition transform hover:scale-105"

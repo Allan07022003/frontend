@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import CustomHeader from '../../components/Header2'; // Asegúrate de importar el nuevo Header correctamente
+import CustomHeader from '../../components/Header2'; 
 
 const CategorySelection = () => {
   const categories = [
@@ -12,8 +12,8 @@ const CategorySelection = () => {
     },
     {
       title: 'Cuerpo Humano',
-      description: 'Clasificación de recursos naturales y objetos artificiales.',
-      imgSrc: 'https://res.cloudinary.com/drl8mphdx/image/upload/v1727501542/v18lracae6fj5ozpm26p.png',
+      description: 'Conoce los organos del Cuerpo Humano.',
+      imgSrc: 'https://res.cloudinary.com/drl8mphdx/image/upload/v1727763895/Human_body_vector_image_on_VectorStock-removebg-preview_bp5dkc.png',
       path: '/sciences/cuerpo-humano',
     },
   ];

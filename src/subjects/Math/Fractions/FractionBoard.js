@@ -3,10 +3,9 @@ import FractionPiece from './FractionPiece';
 import { useAssistant } from '../../../context/AssistantContext';
 import Header from '../../../components/Header';
 import { DndProvider } from 'react-dnd';
-import { TouchBackend } from 'react-dnd-touch-backend'; // Backend para móviles
-import { HTML5Backend } from 'react-dnd-html5-backend'; // Backend para escritorio
+import { TouchBackend } from 'react-dnd-touch-backend'; 
+import { HTML5Backend } from 'react-dnd-html5-backend'; 
 
-// Función para detectar si es un dispositivo móvil
 const isMobileDevice = () => {
   return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 };
