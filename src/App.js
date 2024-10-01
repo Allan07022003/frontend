@@ -14,7 +14,9 @@ import { AssistantProvider } from "./context/AssistantContext";
 import { Toaster } from "react-hot-toast";
 
 import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import { TouchBackend } from "react-dnd-touch-backend";
+import { isMobile } from "react-device-detect"; 
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -32,7 +34,8 @@ function App() {
   return (
     <Router>
       <AssistantProvider>
-        <DndProvider backend={TouchBackend}>
+        {/* Se selecciona el backend según el dispositivo */}
+        <DndProvider backend={isMobile ? TouchBackend : HTML5Backend}>
           <div className="min-h-screen bg-gray-100 text-gray-900">
             <Toaster position="bottom-left" reverseOrder={false} />
             <Routes>
