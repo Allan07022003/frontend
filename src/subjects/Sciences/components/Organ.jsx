@@ -3,13 +3,13 @@ import { useDrag } from "react-dnd";
 import { speak } from "../../../utils/voiceService";
 
 const organTranslations = {
-  heart: "corazón",
-  lungs: "pulmones",
-  stomach: "estómago",
-  liver: "hígado",
-  kidneys: "riñones",
-  intestines: "intestinos",
-  brain: "cerebro",
+  corazon: "corazón",
+  pulmones: "pulmones",
+  estomago: "estómago",
+  higado: "hígado", // sin tilde para evitar errores
+  rinones: "riñones", // sin tilde para evitar errores
+  intestinos: "intestinos",
+  cerebro: "cerebro",
 };
 
 const Organ = ({ name, imageUrl }) => {
