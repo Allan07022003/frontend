@@ -21,6 +21,7 @@ const CompleteProfileModal = ({ isOpen, onClose, onProfileComplete }) => {
   const [lastName, setLastName] = useState('');
   const [age, setAge] = useState('');
   const [grade, setGrade] = useState('');
+  const [password, setPassword] = useState('');
   const { showAssistantMessage } = useAssistant();
   const toast = useToast();
   const token = localStorage.getItem('token');
@@ -58,6 +59,11 @@ const CompleteProfileModal = ({ isOpen, onClose, onProfileComplete }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (password.length < 6) {
+      showAssistantMessage('La contraseña debe tener al menos 6 caracteres.', 'warning');
+      return;
+    }
+
     if (
       !firstName ||
       !lastName ||
@@ -81,7 +87,7 @@ const CompleteProfileModal = ({ isOpen, onClose, onProfileComplete }) => {
     try {
       await axios.put(
         'https://backend-montessori-c4e81f9ce871.herokuapp.com/api/students/complete-profile',
-        { firstName, lastName, age, grade },
+        { firstName, lastName, age, grade, password },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -157,6 +163,16 @@ const CompleteProfileModal = ({ isOpen, onClose, onProfileComplete }) => {
                 <option value="3rd Grade">3rd Grade</option>
                 <option value="4th Grade">4th Grade</option>
               </Select>
+            </FormControl>
+
+            <FormControl id="password" isRequired mt={4}>
+              <FormLabel>Contraseña</FormLabel>
+              <Input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Ingresa una contraseña"
+              />
             </FormControl>
 
             <Button

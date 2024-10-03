@@ -12,11 +12,30 @@ const Login = () => {
   const { showAssistantMessage } = useAssistant(); 
   const navigate = useNavigate();
 
+  // Validación del formato del correo electrónico
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
+    // Validación: Asegurar que los campos no estén vacíos
     if (!email || !password) {
       showAssistantMessage('Por favor completa todos los campos', 'error');
+      return;
+    }
+
+    // Validación: Comprobar que la contraseña tenga al menos 6 caracteres
+    if (password.length < 6) {
+      showAssistantMessage('La contraseña debe tener al menos 6 caracteres.', 'error');
+      return;
+    }
+
+    // Validación: Formato correcto del correo electrónico
+    if (!validateEmail(email)) {
+      showAssistantMessage('Por favor introduce un correo electrónico válido.', 'error');
       return;
     }
 

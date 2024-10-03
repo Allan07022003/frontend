@@ -118,109 +118,108 @@ const Dashboard = () => {
             </h1>
 
             <Grid 
-  templateColumns={{ base: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' }} 
-  gap={4}  // Reduje el gap para dar más espacio entre las cards
-  className="w-full max-w-6xl px-4"
-  justifyContent="center"
-  alignItems="center"
->
-  <Box 
-    onClick={() => navigate('/math')} 
-    bgGradient="linear(to-r, blue.200, blue.500)" 
-    p={4}  // Reduje el padding
-    borderRadius="xl"  // Reduje el radio de los bordes
-    height={{ base: "140px", sm: "160px", lg: "180px" }}  // Reduje la altura
-    boxShadow="md"
-    className="hover:scale-105 hover:shadow-xl transition-all duration-500 cursor-pointer transform"
-    style={{ 
-      transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease, background-color 0.3s ease",
-      filter: "drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.1))"
-    }}
-    _hover={{ bgGradient: "linear(to-r, blue.400, blue.700)" }} 
-  >
-    <Text 
-      textAlign="center" 
-      fontWeight="bold"
-      fontSize={{ base: 'lg', sm: 'xl', lg: '2xl' }}  // Ajusté el tamaño de la fuente
-      color="white"
-    >
-      Matemáticas
-    </Text>
-    <Text 
-      textAlign="center" 
-      fontSize={{ base: 'sm', sm: 'md', lg: 'lg' }}  // Ajusté el subtítulo
-      color="white"
-      opacity={0.8}
-    >
-      ¡Aprende a Restar con tiras y Fracciones con Montessori!
-    </Text>
-  </Box>
+              templateColumns={{ base: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' }} 
+              gap={4}  
+              className="w-full max-w-6xl px-4"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Box 
+                onClick={() => navigate('/math')} 
+                bgGradient="linear(to-r, blue.200, blue.500)" 
+                p={4}  
+                borderRadius="xl"  
+                height={{ base: "140px", sm: "160px", lg: "180px" }}  
+                boxShadow="md"
+                className="hover:scale-105 hover:shadow-xl transition-all duration-500 cursor-pointer transform"
+                style={{ 
+                  transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease, background-color 0.3s ease",
+                  filter: "drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.1))"
+                }}
+                _hover={{ bgGradient: "linear(to-r, blue.400, blue.700)" }} 
+              >
+                <Text 
+                  textAlign="center" 
+                  fontWeight="bold"
+                  fontSize={{ base: 'lg', sm: 'xl', lg: '2xl' }}  
+                  color="white"
+                >
+                  Matemáticas
+                </Text>
+                <Text 
+                  textAlign="center" 
+                  fontSize={{ base: 'sm', sm: 'md', lg: 'lg' }}  
+                  color="white"
+                  opacity={0.8}
+                >
+                  ¡Aprende a Restar con tiras y Fracciones con Montessori!
+                </Text>
+              </Box>
 
-  <Box 
-    onClick={() => navigate('/language')} 
-    bgGradient="linear(to-r, green.200, green.500)" 
-    p={4} 
-    borderRadius="xl" 
-    height={{ base: "140px", sm: "160px", lg: "180px" }}  
-    boxShadow="md"
-    className="hover:scale-105 hover:shadow-xl transition-all duration-500 cursor-pointer transform"
-    style={{ 
-      transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease, background-color 0.3s ease",
-      filter: "drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.1))"
-    }}
-    _hover={{ bgGradient: "linear(to-r, green.400, green.700)" }} 
-  >
-    <Text 
-      textAlign="center" 
-      fontWeight="bold"
-      fontSize={{ base: 'lg', sm: 'xl', lg: '2xl' }}  
-      color="white"
-    >
-      Lenguaje
-    </Text>
-    <Text 
-      textAlign="center" 
-      fontSize={{ base: 'sm', sm: 'md', lg: 'lg' }} 
-      color="white"
-      opacity={0.8}
-    >
-      ¡Aprende a leer y a Formar palabras de una forma Divertida!
-    </Text>
-  </Box>
+              <Box 
+                onClick={() => navigate('/language')} 
+                bgGradient="linear(to-r, green.200, green.500)" 
+                p={4} 
+                borderRadius="xl" 
+                height={{ base: "140px", sm: "160px", lg: "180px" }}  
+                boxShadow="md"
+                className="hover:scale-105 hover:shadow-xl transition-all duration-500 cursor-pointer transform"
+                style={{ 
+                  transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease, background-color 0.3s ease",
+                  filter: "drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.1))"
+                }}
+                _hover={{ bgGradient: "linear(to-r, green.400, green.700)" }} 
+              >
+                <Text 
+                  textAlign="center" 
+                  fontWeight="bold"
+                  fontSize={{ base: 'lg', sm: 'xl', lg: '2xl' }}  
+                  color="white"
+                >
+                  Lenguaje
+                </Text>
+                <Text 
+                  textAlign="center" 
+                  fontSize={{ base: 'sm', sm: 'md', lg: 'lg' }} 
+                  color="white"
+                  opacity={0.8}
+                >
+                  ¡Aprende a leer y a Formar palabras de una forma Divertida!
+                </Text>
+              </Box>
 
-  <Box 
-    onClick={() => navigate('/sciences')} 
-    bgGradient="linear(to-r, orange.200, orange.500)" 
-    p={4} 
-    borderRadius="xl"  
-    height={{ base: "140px", sm: "160px", lg: "180px" }}  
-    boxShadow="md"
-    className="hover:scale-105 hover:shadow-xl transition-all duration-500 cursor-pointer transform"
-    style={{ 
-      transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease, background-color 0.3s ease",
-      filter: "drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.1))"
-    }}
-    _hover={{ bgGradient: "linear(to-r, orange.400, orange.700)" }} 
-  >
-    <Text 
-      textAlign="center" 
-      fontWeight="bold"
-      fontSize={{ base: 'lg', sm: 'xl', lg: '2xl' }}  
-      color="white"
-    >
-      Ciencias
-    </Text>
-    <Text 
-      textAlign="center" 
-      fontSize={{ base: 'sm', sm: 'md', lg: 'lg' }} 
-      color="white"
-      opacity={0.8}
-    >
-      ¡Explora y conoce los seres vivos y Aprende acerca del cuerpo humano!
-    </Text>
-  </Box>
-</Grid>
-
+              <Box 
+                onClick={() => navigate('/sciences')} 
+                bgGradient="linear(to-r, orange.200, orange.500)" 
+                p={4} 
+                borderRadius="xl"  
+                height={{ base: "140px", sm: "160px", lg: "180px" }}  
+                boxShadow="md"
+                className="hover:scale-105 hover:shadow-xl transition-all duration-500 cursor-pointer transform"
+                style={{ 
+                  transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease, background-color 0.3s ease",
+                  filter: "drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.1))"
+                }}
+                _hover={{ bgGradient: "linear(to-r, orange.400, orange.700)" }} 
+              >
+                <Text 
+                  textAlign="center" 
+                  fontWeight="bold"
+                  fontSize={{ base: 'lg', sm: 'xl', lg: '2xl' }}  
+                  color="white"
+                >
+                  Ciencias
+                </Text>
+                <Text 
+                  textAlign="center" 
+                  fontSize={{ base: 'sm', sm: 'md', lg: 'lg' }} 
+                  color="white"
+                  opacity={0.8}
+                >
+                  ¡Explora y conoce los seres vivos y Aprende acerca del cuerpo humano!
+                </Text>
+              </Box>
+            </Grid>
 
           </>
         )}
