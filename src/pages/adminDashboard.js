@@ -30,8 +30,8 @@ import Header from "../components/Header";
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const [students, setStudents] = useState([]);
-  const [filteredStudents, setFilteredStudents] = useState([]); // Nuevo estado para la búsqueda
-  const [searchTerm, setSearchTerm] = useState(""); // Estado para el término de búsqueda
+  const [filteredStudents, setFilteredStudents] = useState([]); 
+  const [searchTerm, setSearchTerm] = useState(""); 
   const [newStudent, setNewStudent] = useState({
     firstName: "",
     lastName: "",
@@ -70,7 +70,7 @@ const AdminDashboard = () => {
         }
 
         setStudents(studentResponse.data);
-        setFilteredStudents(studentResponse.data); // Inicializamos filteredStudents con todos los estudiantes
+        setFilteredStudents(studentResponse.data); 
       } catch (error) {
         console.error("Error al obtener los estudiantes:", error);
         toast.error("Error al obtener los estudiantes");
@@ -102,18 +102,18 @@ const AdminDashboard = () => {
     fetchStudentsAndTeacherInfo();
   }, []);
 
-  // Función para manejar el cambio en el campo de búsqueda
+ 
   const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value); // Actualizamos el estado del término de búsqueda
+    setSearchTerm(e.target.value); 
     if (e.target.value === "") {
-      setFilteredStudents(students); // Si el campo está vacío, mostramos todos los estudiantes
+      setFilteredStudents(students); 
     } else {
       const filtered = students.filter((student) =>
         `${student.firstName} ${student.lastName}`
           .toLowerCase()
           .includes(e.target.value.toLowerCase()) || student.email.toLowerCase().includes(e.target.value.toLowerCase())
       );
-      setFilteredStudents(filtered); // Actualizamos los estudiantes filtrados
+      setFilteredStudents(filtered); 
     }
   };
 
@@ -163,7 +163,7 @@ const AdminDashboard = () => {
         }
       );
       setStudents([...students, response.data]);
-      setFilteredStudents([...students, response.data]); // Actualizamos los estudiantes filtrados
+      setFilteredStudents([...students, response.data]); 
       toast.success("Estudiante creado exitosamente");
       setNewStudent({
         firstName: "",
@@ -272,7 +272,7 @@ const AdminDashboard = () => {
         }
       );
       setStudents(students.filter((student) => student._id !== id));
-      setFilteredStudents(filteredStudents.filter((student) => student._id !== id)); // Actualizamos los estudiantes filtrados
+      setFilteredStudents(filteredStudents.filter((student) => student._id !== id));
       toast.success("Estudiante eliminado exitosamente");
     } catch (error) {
       console.error("Error eliminando estudiante:", error);
@@ -319,7 +319,6 @@ const AdminDashboard = () => {
           Aquí puedes gestionar la información de los estudiantes.
         </Text>
 
-        {/* Barra de búsqueda */}
         <Input
           placeholder="Buscar estudiante por nombre o correo"
           value={searchTerm}
