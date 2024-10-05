@@ -82,13 +82,17 @@ const SubtractionActivity = () => {
   }, [generarHojaDeTrabajo]);
 
   const handleDrop = (number, length, color) => {
-    if (fase === 1 && color === 'bg-blue-500' && length === sustraendo) {
-      const newCoveredCells = [...Array(length).keys()].map(i => minuendo - i);
-      setCoveredCells(prev => [...prev, ...newCoveredCells]);
+    if (fase === 1 && color === 'bg-blue-500') {
+      if (length === sustraendo) {
+        const newCoveredCells = [...Array(length).keys()].map(i => minuendo - i);
+        setCoveredCells(prev => [...prev, ...newCoveredCells]);
   
-      showAssistantMessage('Sustraendo (tira azul) colocado correctamente.', 'success');
+        showAssistantMessage('Sustraendo (tira azul) colocado correctamente.', 'success');
   
-      setFase(2);
+        setFase(2);
+      } else {
+        showAssistantMessage('Error: Tira azul incorrecta. Intenta nuevamente.', 'error');
+      }
     } 
     else if (fase === 2 && color === 'bg-red-500' && length === resultado) {
       const newCoveredCells = [...Array(length).keys()].map(i => resultado - i);

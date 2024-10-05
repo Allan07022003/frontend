@@ -30,6 +30,8 @@ import Header from "../components/Header";
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const [students, setStudents] = useState([]);
+  const [filteredStudents, setFilteredStudents] = useState([]); // Nuevo estado para la búsqueda
+  const [searchTerm, setSearchTerm] = useState(""); // Estado para el término de búsqueda
   const [newStudent, setNewStudent] = useState({
     firstName: "",
     lastName: "",
@@ -42,7 +44,7 @@ const AdminDashboard = () => {
   const [currentStudentId, setCurrentStudentId] = useState(null);
   const [teacherGrade, setTeacherGrade] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [isSmallScreen] = useMediaQuery("(max-width: 768px)"); // Media query para responsividad
+  const [isSmallScreen] = useMediaQuery("(max-width: 768px)");
 
   useEffect(() => {
     const fetchStudentsAndTeacherInfo = async () => {
@@ -68,6 +70,7 @@ const AdminDashboard = () => {
         }
 
         setStudents(studentResponse.data);
+        setFilteredStudents(studentResponse.data); // Inicializamos filteredStudents con todos los estudiantes
       } catch (error) {
         console.error("Error al obtener los estudiantes:", error);
         toast.error("Error al obtener los estudiantes");
@@ -98,6 +101,21 @@ const AdminDashboard = () => {
 
     fetchStudentsAndTeacherInfo();
   }, []);
+
+  // Función para manejar el cambio en el campo de búsqueda
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value); // Actualizamos el estado del término de búsqueda
+    if (e.target.value === "") {
+      setFilteredStudents(students); // Si el campo está vacío, mostramos todos los estudiantes
+    } else {
+      const filtered = students.filter((student) =>
+        `${student.firstName} ${student.lastName}`
+          .toLowerCase()
+          .includes(e.target.value.toLowerCase()) || student.email.toLowerCase().includes(e.target.value.toLowerCase())
+      );
+      setFilteredStudents(filtered); // Actualizamos los estudiantes filtrados
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -145,6 +163,7 @@ const AdminDashboard = () => {
         }
       );
       setStudents([...students, response.data]);
+      setFilteredStudents([...students, response.data]); // Actualizamos los estudiantes filtrados
       toast.success("Estudiante creado exitosamente");
       setNewStudent({
         firstName: "",
@@ -154,7 +173,7 @@ const AdminDashboard = () => {
         age: "",
         grade: "",
       });
-      setIsEditing(false); 
+      setIsEditing(false);
       onClose();
     } catch (error) {
       console.error("Error creando estudiante:", error);
@@ -163,7 +182,7 @@ const AdminDashboard = () => {
   };
 
   const handleOpenCreateStudent = () => {
-    setIsEditing(false); 
+    setIsEditing(false);
     setNewStudent({
       firstName: "",
       lastName: "",
@@ -176,13 +195,13 @@ const AdminDashboard = () => {
   };
 
   const handleEditStudent = (student) => {
-    setIsEditing(true); 
+    setIsEditing(true);
     setCurrentStudentId(student._id);
     setNewStudent({
       firstName: student.firstName,
       lastName: student.lastName,
       email: student.email,
-      password: "", 
+      password: "",
       age: student.age,
       grade: student.grade,
     });
@@ -190,7 +209,7 @@ const AdminDashboard = () => {
   };
 
   const handleUpdateStudent = async () => {
-    if (!validateForm()) return; 
+    if (!validateForm()) return;
 
     try {
       const token = localStorage.getItem("token");
@@ -214,8 +233,13 @@ const AdminDashboard = () => {
           student._id === currentStudentId ? response.data : student
         )
       );
+      setFilteredStudents(
+        students.map((student) =>
+          student._id === currentStudentId ? response.data : student
+        )
+      ); // Actualizamos los estudiantes filtrados
       toast.success("Estudiante actualizado exitosamente");
-      setIsEditing(false); 
+      setIsEditing(false);
       setNewStudent({
         firstName: "",
         lastName: "",
@@ -248,6 +272,7 @@ const AdminDashboard = () => {
         }
       );
       setStudents(students.filter((student) => student._id !== id));
+      setFilteredStudents(filteredStudents.filter((student) => student._id !== id)); // Actualizamos los estudiantes filtrados
       toast.success("Estudiante eliminado exitosamente");
     } catch (error) {
       console.error("Error eliminando estudiante:", error);
@@ -279,13 +304,13 @@ const AdminDashboard = () => {
       <Box
         maxW="4xl"
         mx="auto"
-        mt={isSmallScreen ? "16" : "24"} 
+        mt={isSmallScreen ? "16" : "24"}
         p="6"
         borderRadius="lg"
         boxShadow="xl"
         bg="white"
         textAlign="center"
-        fontFamily="'Comic Sans MS', cursive, sans-serif"
+        fontFamily="'Roboto', 'Arial', sans-serif"
       >
         <Heading mb="4" fontSize={isSmallScreen ? "xl" : "2xl"} color="#5A67D8">
           Estudiantes Asignados
@@ -294,7 +319,16 @@ const AdminDashboard = () => {
           Aquí puedes gestionar la información de los estudiantes.
         </Text>
 
-        {/* Tabla responsiva */}
+        {/* Barra de búsqueda */}
+        <Input
+          placeholder="Buscar estudiante por nombre o correo"
+          value={searchTerm}
+          onChange={handleSearchChange}
+          mb="6"
+          size="md"
+          focusBorderColor="teal.500"
+        />
+
         <Box overflowX="auto">
           <Table variant="striped" colorScheme="teal" mb="6" size={isSmallScreen ? "sm" : "md"}>
             <Thead>
@@ -307,7 +341,7 @@ const AdminDashboard = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {students.map((student) => (
+              {filteredStudents.map((student) => (
                 <Tr key={student._id}>
                   <Td>{student.firstName} {student.lastName}</Td>
                   <Td>{student.grade || "No asignado"}</Td>
